@@ -82,8 +82,23 @@ class SystemLevelPipelineTests(unittest.TestCase):
             self.assertGreater(summary["backtest_metric_rows"], 0)
             self.assertGreater(summary["forecast_rows"], 0)
             self.assertTrue((output_root / "reports" / "system_level_summary.md").exists())
+            self.assertTrue((output_root / "reports" / "sarimax_review.md").exists())
+            self.assertTrue((output_root / "reports" / "system_level_interval_summary.md").exists())
             self.assertTrue((output_root / "metrics" / "system_level_model_comparison.csv").exists())
             self.assertTrue((output_root / "forecasts" / "system_level_future_forecasts.csv").exists())
+            self.assertTrue((output_root / "backtests" / "system_level_fit_diagnostics.csv").exists())
+            self.assertTrue((output_root / "backtests" / "system_level_backtest_residuals.csv").exists())
+            self.assertTrue((output_root / "metrics" / "system_level_interval_calibration.csv").exists())
+            self.assertTrue((output_root / "metrics" / "system_level_interval_coverage.csv").exists())
+
+            future_forecasts = pd.read_csv(output_root / "forecasts" / "system_level_future_forecasts.csv")
+            self.assertTrue(
+                {"point_forecast", "lower_80", "upper_80", "lower_95", "upper_95", "horizon_step"}.issubset(
+                    future_forecasts.columns
+                )
+            )
+            self.assertTrue((future_forecasts["lower_80"].fillna(0.0) >= 0.0).all())
+            self.assertTrue((future_forecasts["lower_95"].fillna(0.0) >= 0.0).all())
 
 
 if __name__ == "__main__":

@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import numpy as np
 import pandas as pd
 
 from metro_bike_share_forecasting.evaluation.metrics import bias, mae, mase, rmse
 from metro_bike_share_forecasting.system_level.config import SystemLevelConfig
-from metro_bike_share_forecasting.system_level.models import MODEL_REGISTRY
+from metro_bike_share_forecasting.system_level.models import MODEL_DIAGNOSTIC_COLUMNS, MODEL_REGISTRY
 
 
 @dataclass(frozen=True)
@@ -103,13 +104,17 @@ def run_backtests(
                 actual_model_name = (
                     str(forecast_frame["model_name"].iloc[0]) if "model_name" in forecast_frame.columns and not forecast_frame.empty else model_key
                 )
+                forecast_frame = forecast_frame.sort_values("date").reset_index(drop=True)
                 forecast_frame["fold_id"] = window.fold_id
                 forecast_frame["horizon"] = horizon
+                forecast_frame["horizon_step"] = np.arange(1, len(forecast_frame) + 1, dtype=int)
                 forecast_frame["actual"] = window.test_frame["target"].to_numpy(dtype=float)
                 forecast_rows.append(forecast_frame)
 
                 metric_row = evaluate_prediction_window(window, forecast_frame)
                 metric_row["model_name"] = actual_model_name
+                for column in MODEL_DIAGNOSTIC_COLUMNS:
+                    metric_row[column] = forecast_frame[column].iloc[0] if column in forecast_frame.columns and not forecast_frame.empty else None
                 metric_rows.append(metric_row)
 
     metrics = pd.DataFrame(metric_rows)

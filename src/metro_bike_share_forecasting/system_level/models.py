@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import time
 import warnings
 from typing import Callable
 
@@ -36,6 +37,21 @@ from metro_bike_share_forecasting.system_level.features import (
 )
 
 
+MODEL_DIAGNOSTIC_COLUMNS = [
+    "fit_success",
+    "fallback_triggered",
+    "fallback_reason",
+    "exception_type",
+    "warning_count",
+    "n_train",
+    "n_exog",
+    "condition_number",
+    "model_runtime_seconds",
+    "selected_spec",
+    "used_exog_columns",
+]
+
+
 def _clip_nonnegative(values: np.ndarray | pd.Series) -> np.ndarray:
     return np.maximum(np.asarray(values, dtype=float), 0.0)
 
@@ -44,6 +60,13 @@ def _fallback_prediction(train_frame: pd.DataFrame, horizon: int, label: str) ->
     value = float(train_frame["target"].iloc[-1])
     dates = build_future_dates(train_frame["date"].iloc[-1], horizon)
     return pd.DataFrame({"date": dates["date"], "prediction": np.repeat(max(value, 0.0), horizon), "model_name": label})
+
+
+def _attach_diagnostics(frame: pd.DataFrame, diagnostics: dict[str, object]) -> pd.DataFrame:
+    tagged = frame.copy()
+    for column in MODEL_DIAGNOSTIC_COLUMNS:
+        tagged[column] = diagnostics.get(column)
+    return tagged
 
 
 def _seasonal_fallback_prediction(train_frame: pd.DataFrame, horizon: int, label: str) -> pd.DataFrame:
@@ -89,6 +112,124 @@ def _finalize_predictions(
     return pd.DataFrame({"date": future_dates["date"], "prediction": values, "model_name": model_name})
 
 
+def _drop_constant_columns(frame: pd.DataFrame) -> pd.DataFrame:
+    keep_columns = []
+    for column in frame.columns:
+        series = frame[column]
+        if series.nunique(dropna=False) > 1:
+            keep_columns.append(column)
+    return frame[keep_columns].copy()
+
+
+def _standardize_continuous_columns(
+    train_frame: pd.DataFrame,
+    future_frame: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    train_scaled = train_frame.copy()
+    future_scaled = future_frame.copy()
+    for column in train_scaled.columns:
+        unique_values = train_scaled[column].dropna().unique()
+        if len(unique_values) <= 2:
+            continue
+        std = float(train_scaled[column].std(ddof=0))
+        if not np.isfinite(std) or std == 0.0:
+            continue
+        mean = float(train_scaled[column].mean())
+        train_scaled[column] = (train_scaled[column] - mean) / std
+        future_scaled[column] = (future_scaled[column] - mean) / std
+    return train_scaled, future_scaled
+
+
+def _drop_highly_collinear_columns(frame: pd.DataFrame, threshold: float = 0.98) -> tuple[pd.DataFrame, list[str]]:
+    if frame.shape[1] <= 1:
+        return frame.copy(), []
+    corr = frame.corr().abs()
+    upper = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
+    dropped = [column for column in upper.columns if any(upper[column] > threshold)]
+    return frame.drop(columns=dropped, errors="ignore").copy(), dropped
+
+
+def _prepare_sarimax_exog(
+    train_frame: pd.DataFrame,
+    future_dates: pd.DataFrame,
+    config: SystemLevelConfig,
+    external_features: pd.DataFrame,
+) -> tuple[pd.DataFrame | None, pd.DataFrame | None, list[str], float | None]:
+    model_frame = build_system_level_features(train_frame.copy(), config, external_features)
+    exog_columns = _sarimax_feature_columns(model_frame)
+    if not exog_columns:
+        return None, None, [], None
+
+    exog_train = model_frame[exog_columns].apply(pd.to_numeric, errors="coerce").fillna(0.0).astype(float).reset_index(drop=True)
+    future_known = build_known_future_features(future_dates, config, external_features)
+    exog_future = (
+        future_known.reindex(columns=exog_columns, fill_value=0.0)
+        .apply(pd.to_numeric, errors="coerce")
+        .fillna(0.0)
+        .astype(float)
+        .reset_index(drop=True)
+    )
+
+    exog_train = _drop_constant_columns(exog_train)
+    exog_future = exog_future.reindex(columns=exog_train.columns, fill_value=0.0)
+    if exog_train.empty:
+        return None, None, [], None
+
+    exog_train, exog_future = _standardize_continuous_columns(exog_train, exog_future)
+    exog_train, dropped_columns = _drop_highly_collinear_columns(exog_train)
+    exog_future = exog_future.reindex(columns=exog_train.columns, fill_value=0.0)
+
+    used_columns = exog_train.columns.tolist()
+    if not used_columns:
+        return None, None, [], None
+
+    try:
+        condition_number = float(np.linalg.cond(exog_train.to_numpy(dtype=float)))
+    except Exception:
+        condition_number = None
+    if condition_number is not None and not np.isfinite(condition_number):
+        condition_number = None
+
+    return exog_train, exog_future, used_columns, condition_number
+
+
+def _sarimax_training_frame(train_frame: pd.DataFrame, max_history: int = 1095) -> pd.DataFrame:
+    ordered = train_frame.sort_values("date").copy()
+    if len(ordered) > max_history:
+        ordered = ordered.tail(max_history).copy()
+    return ordered.reset_index(drop=True)
+
+
+def _sarimax_prediction_is_implausible(train_frame: pd.DataFrame, predictions: pd.Series | np.ndarray, horizon: int) -> tuple[bool, str | None]:
+    values = np.asarray(predictions, dtype=float)
+    if not np.isfinite(values).all():
+        return True, "non_finite_forecast_values"
+    if (values < 0.0).any():
+        return True, "negative_forecast_values"
+
+    upper_bound = _prediction_upper_bound(train_frame)
+    if len(values) > 0 and values.max() > upper_bound:
+        return True, "forecast_exceeds_plausible_upper_bound"
+
+    recent = train_frame["target"].astype(float).dropna().tail(min(len(train_frame), 30))
+    if recent.empty:
+        return False, None
+
+    recent_mean = float(recent.mean())
+    recent_max = float(recent.max())
+    if horizon >= 30 and len(values) > 1:
+        end_value = float(values[-1])
+        if end_value > max(recent_max * 1.6, recent_mean * 1.75):
+            return True, "implausible_upward_drift"
+        if float(np.nanmax(values) - np.nanmin(values)) > max(recent_mean * 1.0, recent_max * 0.75):
+            return True, "excessive_medium_horizon_volatility"
+    return False, None
+
+
+def _sarimax_spec_label(order: tuple[int, int, int], seasonal_order: tuple[int, int, int, int], trend: str | None) -> str:
+    return f"order={order}; seasonal_order={seasonal_order}; trend={trend or 'n'}"
+
+
 def _stable_dynamic_feature_columns(frame: pd.DataFrame) -> list[str]:
     raw_calendar = {"day_of_week", "week_of_year", "month", "quarter", "year", "day_of_month", "day_of_year", "season_code"}
     known_columns = known_future_feature_columns(frame)
@@ -105,6 +246,24 @@ def _stable_dynamic_feature_columns(frame: pd.DataFrame) -> list[str]:
         column
         for column in known_columns
         if column in {"is_weekend", "is_holiday"} or column.startswith("weekly_") or column.startswith("yearly_")
+    ]
+    return sorted(dict.fromkeys(selected + external_numeric))
+
+
+def _sarimax_feature_columns(frame: pd.DataFrame) -> list[str]:
+    known_columns = known_future_feature_columns(frame)
+    external_numeric = [
+        column
+        for column in known_columns
+        if not column.startswith("weekly_")
+        and not column.startswith("yearly_")
+        and column not in {"day_of_week", "week_of_year", "month", "quarter", "year", "day_of_month", "day_of_year", "season_code"}
+        and pd.api.types.is_numeric_dtype(frame[column])
+    ]
+    selected = [
+        column
+        for column in known_columns
+        if column in {"is_weekend", "is_holiday"} or column.startswith("yearly_")
     ]
     return sorted(dict.fromkeys(selected + external_numeric))
 
@@ -153,35 +312,126 @@ def sarimax_dynamic_forecast(
     config: SystemLevelConfig,
     external_features: pd.DataFrame,
 ) -> pd.DataFrame:
-    model_frame = build_system_level_features(train_frame.copy(), config, external_features)
-    exog_columns = _stable_dynamic_feature_columns(model_frame)
-    exog_train = model_frame[exog_columns].fillna(0.0).astype(float)
-    future_dates = build_future_dates(train_frame["date"].iloc[-1], horizon)
-    exog_future = build_known_future_features(future_dates, config, external_features)[exog_columns].fillna(0.0).astype(float)
+    sarimax_train = _sarimax_training_frame(train_frame)
+    future_dates = build_future_dates(sarimax_train["date"].iloc[-1], horizon)
+    diagnostics: dict[str, object] = {
+        "fit_success": False,
+        "fallback_triggered": True,
+        "fallback_reason": "",
+        "exception_type": "",
+        "warning_count": 0,
+        "n_train": int(len(sarimax_train)),
+        "n_exog": 0,
+        "condition_number": None,
+        "model_runtime_seconds": None,
+        "selected_spec": "",
+        "used_exog_columns": "",
+    }
 
     try:
-        fitted = _fit_statsmodels_safely(
-            lambda: SARIMAX(
-                train_frame["target"].astype(float),
-                order=(0, 1, 1),
-                seasonal_order=(0, 1, 1, 7),
-                exog=exog_train,
-                trend="n",
-                enforce_stationarity=True,
-                enforce_invertibility=True,
-            ).fit(disp=False)
+        exog_train, exog_future, used_columns, condition_number = _prepare_sarimax_exog(
+            sarimax_train, future_dates, config, external_features
         )
-        predictions = fitted.forecast(steps=horizon, exog=exog_future)
-    except Exception:
-        return _seasonal_fallback_prediction(train_frame, horizon, "sarimax_dynamic_fallback")
+    except Exception as exc:
+        diagnostics.update(
+            {
+                "fallback_reason": "exogenous_preparation_failed",
+                "exception_type": type(exc).__name__,
+            }
+        )
+        return _attach_diagnostics(_seasonal_fallback_prediction(sarimax_train, horizon, "sarimax_dynamic_fallback"), diagnostics)
 
-    return _finalize_predictions(
-        train_frame,
-        future_dates,
-        predictions,
-        "sarimax_dynamic",
-        "sarimax_dynamic_fallback",
+    diagnostics["n_exog"] = len(used_columns)
+    diagnostics["condition_number"] = condition_number
+    diagnostics["used_exog_columns"] = "|".join(used_columns)
+
+    candidate_specs = [
+        ((0, 1, 1), (0, 1, 1, 7), None),
+        ((1, 0, 1), (0, 1, 1, 7), None),
+        ((1, 1, 1), (1, 0, 1, 7), None),
+        ((0, 1, 1), (0, 1, 1, 7), "c"),
+    ]
+
+    best_candidate: dict[str, object] | None = None
+    rejection_reasons: list[str] = []
+
+    for order, seasonal_order, trend in candidate_specs:
+        spec_label = _sarimax_spec_label(order, seasonal_order, trend)
+        started_at = time.perf_counter()
+        try:
+            with warnings.catch_warnings(record=True) as caught_warnings:
+                warnings.simplefilter("always")
+                fitted = SARIMAX(
+                    sarimax_train["target"].astype(float).reset_index(drop=True),
+                    order=order,
+                    seasonal_order=seasonal_order,
+                    exog=exog_train,
+                    trend="n" if trend is None else trend,
+                    enforce_stationarity=True,
+                    enforce_invertibility=True,
+                ).fit(disp=False, maxiter=50)
+            runtime_seconds = time.perf_counter() - started_at
+
+            mle_retvals = getattr(fitted, "mle_retvals", None)
+            if isinstance(mle_retvals, dict) and not bool(mle_retvals.get("converged", True)):
+                rejection_reasons.append(f"{spec_label}:not_converged")
+                continue
+
+            params = np.asarray(getattr(fitted, "params", []), dtype=float)
+            if params.size > 0 and not np.isfinite(params).all():
+                rejection_reasons.append(f"{spec_label}:non_finite_parameters")
+                continue
+
+            predictions = fitted.forecast(steps=horizon, exog=exog_future)
+            is_implausible, reason = _sarimax_prediction_is_implausible(sarimax_train, predictions, horizon)
+            if is_implausible:
+                rejection_reasons.append(f"{spec_label}:{reason}")
+                continue
+
+            aic = float(getattr(fitted, "aic", np.inf))
+            warning_count = len(caught_warnings)
+            candidate = {
+                "spec_label": spec_label,
+                "predictions": np.asarray(predictions, dtype=float),
+                "aic": aic,
+                "warning_count": warning_count,
+                "runtime_seconds": runtime_seconds,
+            }
+            if best_candidate is None or candidate["aic"] < best_candidate["aic"]:
+                best_candidate = candidate
+            if warning_count == 0:
+                break
+        except Exception as exc:
+            rejection_reasons.append(f"{spec_label}:{type(exc).__name__}")
+
+    if best_candidate is None:
+        diagnostics.update(
+            {
+                "fallback_reason": ";".join(rejection_reasons[-5:]) if rejection_reasons else "no_valid_sarimax_candidate",
+                "exception_type": "CandidateSearchFailed",
+            }
+        )
+        return _attach_diagnostics(_seasonal_fallback_prediction(sarimax_train, horizon, "sarimax_dynamic_fallback"), diagnostics)
+
+    diagnostics.update(
+        {
+            "fit_success": True,
+            "fallback_triggered": False,
+            "fallback_reason": "",
+            "exception_type": "",
+            "warning_count": int(best_candidate["warning_count"]),
+            "model_runtime_seconds": float(best_candidate["runtime_seconds"]),
+            "selected_spec": str(best_candidate["spec_label"]),
+        }
     )
+    frame = pd.DataFrame(
+        {
+            "date": future_dates["date"],
+            "prediction": _clip_nonnegative(best_candidate["predictions"]),
+            "model_name": "sarimax_dynamic",
+        }
+    )
+    return _attach_diagnostics(frame, diagnostics)
 
 
 def fourier_dynamic_regression_forecast(
