@@ -1,0 +1,44 @@
+input:
+  daily_aggregate_path: data/processed/daily_aggregate.csv.gz
+  cleaned_trip_path: data/processed/cleaned_trip_data.csv.gz
+  target_column: trip_count
+  date_column: bucket_start
+  frequency: daily
+  segment_type: system_total
+  segment_id: all
+
+forecast:
+  main_horizons: [7, 30]
+  extended_horizon: 90
+
+features:
+  lags: [1, 2, 3, 7, 14, 21, 28, 30, 365]
+  rolling_windows: [7, 14, 28, 30]
+  holiday_country: US
+  include_weekly_fourier: true
+  include_yearly_fourier: true
+  weekly_fourier_order: 3
+  yearly_fourier_order: 3
+  external_features_path: ""
+  external_date_column: date
+
+backtest:
+  initial_train_size: 730
+  step_size: 7
+  max_folds: 8
+
+models:
+  baselines:
+    naive: true
+    seasonal_naive_7: true
+    seasonal_naive_30: true
+  classical:
+    ets: true
+    sarimax_dynamic: true
+    fourier_dynamic_regression: true
+    unobserved_components: false
+  ml:
+    tree_boosting: true
+
+output:
+  root: outputs/system_level

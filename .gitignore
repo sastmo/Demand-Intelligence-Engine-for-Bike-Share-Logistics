@@ -10,11 +10,14 @@ outputs/reports/*
 outputs/figures/*
 outputs/forecasts/*
 outputs/diagnostics/tmp/*
+outputs/system_level/*
 !outputs/reports/.gitkeep
 !outputs/figures/.gitkeep
 !outputs/forecasts/.gitkeep
 !outputs/diagnostics/.gitkeep
 !outputs/diagnostics/tmp/.gitkeep
+!outputs/system_level/.gitkeep
+!outputs/system_level/**/.gitkeep
 notebooks/.ipynb_checkpoints/
 
 # Keep large working datasets local by default.
