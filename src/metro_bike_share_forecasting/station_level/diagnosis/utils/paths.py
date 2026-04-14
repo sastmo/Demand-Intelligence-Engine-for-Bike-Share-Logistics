@@ -22,9 +22,10 @@ def ensure_analysis_directories(config: StationDiagnosisConfig) -> dict[str, Pat
     (station_root / "assets").mkdir(parents=True, exist_ok=True)
     output_root = config.output_root
     tables_dir = output_root / "tables"
+    figures_dir = output_root / "figures"
     reports_dir = output_root / "reports"
     diagnostics_dir = output_root / "diagnostics"
-    for path in [output_root, tables_dir, reports_dir, diagnostics_dir]:
+    for path in [output_root, tables_dir, figures_dir, reports_dir, diagnostics_dir]:
         path.mkdir(parents=True, exist_ok=True)
 
     return {
@@ -33,6 +34,7 @@ def ensure_analysis_directories(config: StationDiagnosisConfig) -> dict[str, Pat
         "station_level_root": station_root,
         "output_root": output_root,
         "tables": tables_dir,
+        "figures": figures_dir,
         "reports": reports_dir,
         "diagnostics": diagnostics_dir,
     }

@@ -30,6 +30,6 @@ This note is about the current system-level forecasting path only.
 ## Practical Guidance
 
 - use system-level diagnosis under `diagnosis/system_level_analysis/`
-- use system-level forecasting under `src/metro_bike_share_forecasting/system_level/` and `scripts/system_level/forecasting/`
+- use system-level forecasting under `src/metro_bike_share_forecasting/system_level/forecasting/` and `scripts/system_level/forecasting/`
 - read forecast outputs only from `forecasts/system_level/`
 - do not mix station-level diagnosis outputs with system-level forecast outputs

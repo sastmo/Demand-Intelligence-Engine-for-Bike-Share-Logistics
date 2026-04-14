@@ -12,7 +12,7 @@ The main cleanup goal is consistency. Diagnosis code lives under `diagnosis/`, r
 | Area | Current stage | Main location |
 |------|---------------|---------------|
 | System-level diagnosis | Implemented | `diagnosis/system_level_analysis/` |
-| System-level forecasting | Implemented | `src/metro_bike_share_forecasting/system_level/` |
+| System-level forecasting | Implemented | `src/metro_bike_share_forecasting/system_level/forecasting/` |
 | Station-level diagnosis | Implemented | `diagnosis/station_level_analysis/` |
 | Station-level forecasting | Not started yet | reserved for later |
 
@@ -159,7 +159,7 @@ Implemented now:
 Main code:
 
 - [docs/system_level/README_system_level.md](docs/system_level/README_system_level.md)
-- [src/metro_bike_share_forecasting/system_level/](src/metro_bike_share_forecasting/system_level)
+- [src/metro_bike_share_forecasting/system_level/forecasting/](src/metro_bike_share_forecasting/system_level/forecasting)
 
 ### Station level
 

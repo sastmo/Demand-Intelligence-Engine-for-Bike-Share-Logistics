@@ -5,7 +5,7 @@ This module is only for the aggregated daily total demand across the full networ
 Diagnosis and forecasting are intentionally separated on this branch:
 
 - diagnosis lives in `diagnosis/system_level_analysis/`
-- forecasting code lives in `src/metro_bike_share_forecasting/system_level/`
+- forecasting code lives in `src/metro_bike_share_forecasting/system_level/forecasting/`
 - forecasting outputs live in `forecasts/system_level/`
 
 ## What It Does

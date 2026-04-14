@@ -17,7 +17,7 @@ The goal is to make system-level and station-level work easy to understand witho
 flowchart TD
     A["data/raw + data/processed"] --> B["diagnosis/system_level_analysis"]
     A --> C["diagnosis/station_level_analysis"]
-    A --> D["src/metro_bike_share_forecasting/system_level"]
+    A --> D["src/metro_bike_share_forecasting/system_level/forecasting"]
     B --> E["diagnosis/system_level_analysis/outputs"]
     C --> F["diagnosis/station_level_analysis/outputs"]
     D --> G["scripts/system_level/forecasting/run_system_level_pipeline.py"]
@@ -47,8 +47,11 @@ Reusable Python code.
 
 - `src/forecasting_diagnostics/`
   generic forecasting diagnostics package used by the system-level diagnosis runner
-- `src/metro_bike_share_forecasting/system_level/`
+- `src/metro_bike_share_forecasting/system_level/forecasting/`
   system-level forecasting package, including features, models, backtesting, intervals, and reporting
+
+- `src/metro_bike_share_forecasting/system_level/diagnosis/`
+  thin system-level diagnosis wrapper around the reusable diagnostics layer
 
 ### `scripts/`
 

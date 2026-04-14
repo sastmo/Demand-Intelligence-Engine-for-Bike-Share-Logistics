@@ -85,7 +85,7 @@ Do not use this for:
 - forecasting models
 - station forecast outputs
 
-### `src/metro_bike_share_forecasting/system_level/`
+### `src/metro_bike_share_forecasting/system_level/forecasting/`
 
 Use this for:
 
@@ -95,6 +95,13 @@ Use this for:
 - backtesting
 - calibrated intervals
 - evaluation helpers
+
+### `src/metro_bike_share_forecasting/system_level/diagnosis/`
+
+Use this for:
+
+- system-level diagnosis-facing wrappers
+- level-specific diagnosis helpers built on the reusable diagnostics package
 
 ### `src/metro_bike_share_forecasting/station_level/diagnosis/`
 
