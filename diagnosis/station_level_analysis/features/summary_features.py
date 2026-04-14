@@ -1,12 +1,15 @@
 from __future__ import annotations
 
-from typing import Iterable
-
 import numpy as np
 import pandas as pd
 
-from station_level_analysis.config import StationDiagnosisConfig
-from station_level_analysis.utils import safe_ratio
+from diagnosis.station_level_analysis.config import StationDiagnosisConfig
+
+
+def _safe_ratio(numerator: float, denominator: float) -> float:
+    if pd.isna(numerator) or pd.isna(denominator) or denominator == 0:
+        return float("nan")
+    return float(numerator) / float(denominator)
 
 
 def _safe_autocorr(values: pd.Series, lag: int, min_history: int) -> float:
@@ -16,8 +19,8 @@ def _safe_autocorr(values: pd.Series, lag: int, min_history: int) -> float:
     return float(series.autocorr(lag=lag))
 
 
-def _effect_strength(target: pd.Series, groups: Iterable[object]) -> float:
-    frame = pd.DataFrame({"target": target.astype(float), "group": list(groups)})
+def _effect_strength(target: pd.Series, groups: pd.Series) -> float:
+    frame = pd.DataFrame({"target": target.astype(float), "group": groups})
     overall = float(frame["target"].mean())
     if overall == 0.0:
         return float("nan")
@@ -32,8 +35,7 @@ def _trend_slope(target: pd.Series) -> float:
         return float("nan")
     x = np.arange(len(target), dtype=float)
     y = target.astype(float).to_numpy()
-    slope = np.polyfit(x, y, 1)[0]
-    return float(slope)
+    return float(np.polyfit(x, y, 1)[0])
 
 
 def _rolling_shift(target: pd.Series, window: int, reducer: str) -> float:
@@ -62,21 +64,15 @@ def _outlier_rate(target: pd.Series, threshold: float) -> float:
 
 def _build_station_grid(station_frame: pd.DataFrame) -> pd.DataFrame:
     observed = station_frame.sort_values("date").copy()
-    start_date = observed["date"].min()
-    end_date = observed["date"].max()
-    full_dates = pd.date_range(start_date, end_date, freq="D")
-    grid = pd.DataFrame({"date": full_dates})
-    grid = grid.merge(observed[["date", "target"]], on="date", how="left")
+    full_dates = pd.date_range(observed["date"].min(), observed["date"].max(), freq="D")
+    grid = pd.DataFrame({"date": full_dates}).merge(observed[["date", "target"]], on="date", how="left")
     grid["missing_flag"] = grid["target"].isna().astype(int)
     grid["target"] = grid["target"].fillna(0.0)
     return grid
 
 
-def build_station_summary_table(
-    station_daily: pd.DataFrame,
-    config: StationDiagnosisConfig,
-) -> pd.DataFrame:
-    """Build one-row-per-station diagnosis summaries from daily station data."""
+def build_station_summary_table(station_daily: pd.DataFrame, config: StationDiagnosisConfig) -> pd.DataFrame:
+    """Build a one-row-per-station summary table for diagnosis."""
 
     if station_daily.empty:
         return pd.DataFrame()
@@ -96,9 +92,8 @@ def build_station_summary_table(
         weekend_mask = weekday.isin([5, 6])
         weekday_mean = float(target.loc[~weekend_mask].mean()) if (~weekend_mask).any() else float("nan")
         weekend_mean = float(target.loc[weekend_mask].mean()) if weekend_mask.any() else float("nan")
-        system_subset = system_total.loc[system_total["date"].between(grid["date"].min(), grid["date"].max())].copy()
-        system_aligned = grid[["date"]].merge(system_subset, on="date", how="left")["system_total"].fillna(0.0)
 
+        system_aligned = grid[["date"]].merge(system_total, on="date", how="left")["system_total"].fillna(0.0)
         if len(target) < 2 or float(target.std(ddof=0)) == 0.0 or float(system_aligned.std(ddof=0)) == 0.0:
             correlation = float("nan")
         else:
@@ -115,18 +110,18 @@ def build_station_summary_table(
                 "end_date": observed["date"].max(),
                 "n_days": int(len(grid)),
                 "missing_rate": float(grid["missing_flag"].mean()),
+                "total_demand": total_demand,
                 "avg_demand": mean_value,
                 "median_demand": float(target.median()),
                 "std_demand": std_value,
-                "coefficient_of_variation": safe_ratio(std_value, mean_value),
+                "coefficient_of_variation": _safe_ratio(std_value, mean_value),
                 "zero_rate": float((target == 0).mean()),
                 "active_day_rate": float((target > 0).mean()),
-                "total_demand": total_demand,
                 "lag1_autocorr": _safe_autocorr(target, 1, config.min_history_for_autocorr),
                 "lag7_autocorr": _safe_autocorr(target, 7, config.min_history_for_autocorr),
                 "weekday_effect_strength": _effect_strength(target, weekday),
                 "month_effect_strength": _effect_strength(target, month),
-                "weekend_ratio": safe_ratio(weekend_mean, weekday_mean),
+                "weekend_ratio": _safe_ratio(weekend_mean, weekday_mean),
                 "trend_slope": _trend_slope(target),
                 "rolling_mean_shift_30d": _rolling_shift(target, config.rolling_window_days, "mean"),
                 "rolling_std_shift_30d": _rolling_shift(target, config.rolling_window_days, "std"),
@@ -134,9 +129,8 @@ def build_station_summary_table(
                 "max_value": float(target.max()),
                 "p95_value": float(target.quantile(0.95)),
                 "correlation_with_system_total": correlation,
-                "demand_share_of_system": safe_ratio(total_demand, system_total_sum),
+                "demand_share_of_system": _safe_ratio(total_demand, system_total_sum),
             }
         )
 
-    summary = pd.DataFrame(rows).sort_values("station_id").reset_index(drop=True)
-    return summary
+    return pd.DataFrame(rows).sort_values("station_id").reset_index(drop=True)

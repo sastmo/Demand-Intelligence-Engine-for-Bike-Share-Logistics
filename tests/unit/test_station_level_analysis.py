@@ -11,8 +11,8 @@ import sys
 
 sys.path.insert(0, str(ROOT))
 
-from station_level_analysis.build_station_summary import build_station_level_diagnosis
-from station_level_analysis.config import StationDiagnosisConfig
+from diagnosis.station_level_analysis.build_station_summary import build_station_level_diagnosis
+from diagnosis.station_level_analysis.config import StationDiagnosisConfig
 
 
 class StationLevelDiagnosisTests(unittest.TestCase):
@@ -37,16 +37,19 @@ class StationLevelDiagnosisTests(unittest.TestCase):
                 date_col="date",
                 station_col="station_id",
                 target_col="target",
-                config=StationDiagnosisConfig(output_dir=output_dir, top_n=2),
+                config=StationDiagnosisConfig(output_root=output_dir, top_n=2, n_clusters=2),
             )
 
             self.assertTrue(Path(written["station_summary_csv"]).exists())
             self.assertTrue(Path(written["station_summary_parquet"]).exists())
             self.assertTrue(Path(written["station_category_summary"]).exists())
+            self.assertTrue(Path(written["station_cluster_profile"]).exists())
+            self.assertTrue(Path(written["summary_with_clusters"]).exists())
             self.assertTrue(Path(written["report"]).exists())
 
             summary = pd.read_csv(written["station_summary_csv"])
             self.assertIn("station_category", summary.columns)
+            self.assertIn("cluster_label", summary.columns)
             self.assertIn("lag1_autocorr", summary.columns)
             self.assertIn("correlation_with_system_total", summary.columns)
             self.assertEqual(summary["station_id"].nunique(), 2)

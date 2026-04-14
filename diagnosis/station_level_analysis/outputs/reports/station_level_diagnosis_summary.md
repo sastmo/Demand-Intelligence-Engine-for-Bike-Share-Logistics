@@ -4,15 +4,23 @@ This is station-level diagnosis only. It is not system-level analysis, forecasti
 
 - Number of stations: 381
 - Date range covered: 2019-01-01 to 2024-12-31
-- Dominant category: mixed_profile
+- Number of clusters: 6
 
-## Station Categories
+## Category Counts
 - `mixed_profile`: 102 stations
 - `weekend_leisure`: 91 stations
 - `sparse_intermittent`: 91 stations
 - `busy_stable`: 64 stations
 - `anomaly_heavy`: 26 stations
 - `seasonal_commuter`: 7 stations
+
+## Cluster Counts
+- `cluster_0`: 185 stations
+- `cluster_1`: 1 stations
+- `cluster_2`: 3 stations
+- `cluster_3`: 5 stations
+- `cluster_4`: 109 stations
+- `cluster_5`: 78 stations
 
 ## Top 5 Busiest Stations
 - `4407`: avg_demand=150.000
@@ -43,8 +51,9 @@ This is station-level diagnosis only. It is not system-level analysis, forecasti
 - `4440`: outlier_rate=0.125
 
 ## Interpretation
-- Stations look heterogeneous rather than uniform.
+- Stations look heterogeneous rather than homogeneous.
 - Sparse or intermittent behavior appears in about 24% of stations.
 - Clear weekday commuter structure appears in about 2% of stations.
-- One global model may be too blunt on its own; sparse, commuter, and anomaly-heavy stations likely need differentiated treatment later.
-- The summary table should be reviewed before deciding whether later forecasting should use one global model, special sparse-station handling, or a more formal grouping strategy.
+- A single global model may be too blunt on its own; sparse, anomaly-heavy, or strongly behavioral subgroups likely need differentiated treatment later.
+- Clustering looks meaningful as an extra diagnostic lens because clusters differ clearly in demand level or sparsity.
+- This diagnosis layer should be reviewed before deciding whether later forecasting should use one global model, special sparse-station handling, cluster-based modeling, or a deeper global model such as DeepAR.
