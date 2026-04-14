@@ -27,6 +27,8 @@ def load_station_daily_data(
     date_col: str,
     station_col: str,
     target_col: str,
+    filter_col: str | None = None,
+    filter_value: str | None = None,
 ) -> pd.DataFrame:
     """Load station-level daily data from CSV or parquet and normalize required columns."""
 
@@ -37,6 +39,11 @@ def load_station_daily_data(
         frame = pd.read_parquet(path)
     else:
         frame = pd.read_csv(path, low_memory=False)
+
+    if filter_col is not None:
+        if filter_col not in frame.columns:
+            raise ValueError(f"Filter column `{filter_col}` was not found in {path}.")
+        frame = frame.loc[frame[filter_col].astype(str) == str(filter_value)].copy()
 
     required = {date_col, station_col, target_col}
     missing = required.difference(frame.columns)
@@ -72,4 +79,3 @@ def safe_ratio(numerator: float, denominator: float) -> float:
     if pd.isna(numerator) or pd.isna(denominator) or denominator == 0:
         return float("nan")
     return float(numerator) / float(denominator)
-
