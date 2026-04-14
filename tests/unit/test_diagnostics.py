@@ -65,7 +65,7 @@ class DiagnosticsTests(unittest.TestCase):
                 output_dir / "tables" / "monthly_profile.csv",
                 output_dir / "tables" / "diagnostics_summary.json",
                 output_dir / "tables" / "diagnostics_summary.csv",
-                output_dir / "report" / "diagnostics_report.md",
+                output_dir / "reports" / "diagnostics_report.md",
             ]
             for path in expected_files:
                 self.assertTrue(path.exists(), str(path))

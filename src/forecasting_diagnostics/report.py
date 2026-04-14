@@ -37,7 +37,7 @@ def prepare_output_dirs(output_root: Path, clean_output: bool) -> tuple[Path, Pa
         shutil.rmtree(output_root)
     figures_dir = output_root / "figures"
     tables_dir = output_root / "tables"
-    report_dir = output_root / "report"
+    report_dir = output_root / "reports"
     figures_dir.mkdir(parents=True, exist_ok=True)
     tables_dir.mkdir(parents=True, exist_ok=True)
     report_dir.mkdir(parents=True, exist_ok=True)

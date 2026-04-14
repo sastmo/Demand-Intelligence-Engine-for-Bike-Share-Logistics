@@ -9,6 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
+RUNNER = ROOT / "scripts" / "system_level" / "diagnosis" / "run_diagnostics.py"
 
 
 class DiagnosticsRunnerTests(unittest.TestCase):
@@ -17,7 +18,7 @@ class DiagnosticsRunnerTests(unittest.TestCase):
             output_root = Path(temp_dir) / "diagnostics_tmp"
             command = [
                 sys.executable,
-                str(ROOT / "run_diagnostics.py"),
+                str(RUNNER),
                 "--synthetic-demo",
                 "--target-col",
                 "value",
@@ -31,7 +32,7 @@ class DiagnosticsRunnerTests(unittest.TestCase):
             self.assertIn("Forecasting diagnostics completed.", result.stdout)
             self.assertTrue((output_root / "figures" / "series.png").exists())
             self.assertTrue((output_root / "tables" / "diagnostics_summary.json").exists())
-            self.assertTrue((output_root / "report" / "diagnostics_report.md").exists())
+            self.assertTrue((output_root / "reports" / "diagnostics_report.md").exists())
 
     def test_runner_filters_segment_and_date_window(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -51,7 +52,7 @@ class DiagnosticsRunnerTests(unittest.TestCase):
 
             command = [
                 sys.executable,
-                str(ROOT / "run_diagnostics.py"),
+                str(RUNNER),
                 str(dataset),
                 "--target-col",
                 "trip_count",

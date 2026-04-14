@@ -9,10 +9,10 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 import sys
 
-sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "src"))
 
-from diagnosis.station_level_analysis.build_station_summary import build_station_level_diagnosis
-from diagnosis.station_level_analysis.config import StationDiagnosisConfig
+from metro_bike_share_forecasting.station_level.diagnosis.config import StationDiagnosisConfig
+from metro_bike_share_forecasting.station_level.diagnosis.pipeline import build_station_level_diagnosis
 
 
 class StationLevelDiagnosisTests(unittest.TestCase):

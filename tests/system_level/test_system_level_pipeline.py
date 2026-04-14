@@ -21,7 +21,7 @@ class SystemLevelPipelineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             aggregate_path = root / "daily_aggregate.csv"
-            output_root = root / "outputs" / "system_level"
+            output_root = root / "forecasts" / "system_level"
 
             periods = 220
             dates = pd.date_range("2022-01-01", periods=periods, freq="D")

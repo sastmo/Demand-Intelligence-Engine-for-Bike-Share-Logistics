@@ -63,7 +63,7 @@ class DiagnosticConfig:
     max_acf_lags: int | None = None
     rolling_window: int | None = None
     outlier_threshold: float = 5.0
-    output_root: Path = Path("outputs/diagnostics/tmp")
+    output_root: Path = Path("diagnosis/system_level_analysis/outputs")
     clean_output: bool = False
     events: tuple[DiagnosticEvent, ...] = field(default_factory=tuple)
 

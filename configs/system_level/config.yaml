@@ -41,4 +41,4 @@ models:
     tree_boosting: true
 
 output:
-  root: outputs/system_level
+  root: forecasts/system_level

@@ -6,18 +6,21 @@ __pycache__/
 .venv/
 data/interim/
 data/processed/
+data/station_daily.csv
 outputs/reports/*
 outputs/figures/*
 outputs/forecasts/*
 outputs/diagnostics/tmp/*
-outputs/system_level/*
+forecasts/system_level/*
+diagnosis/**/outputs/**
 !outputs/reports/.gitkeep
 !outputs/figures/.gitkeep
 !outputs/forecasts/.gitkeep
 !outputs/diagnostics/.gitkeep
 !outputs/diagnostics/tmp/.gitkeep
-!outputs/system_level/.gitkeep
-!outputs/system_level/**/.gitkeep
+!forecasts/system_level/.gitkeep
+!forecasts/system_level/**/.gitkeep
+!diagnosis/**/outputs/**/.gitkeep
 notebooks/.ipynb_checkpoints/
 
 # Keep large working datasets local by default.
