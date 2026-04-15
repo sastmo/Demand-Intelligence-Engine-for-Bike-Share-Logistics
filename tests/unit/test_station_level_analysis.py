@@ -86,7 +86,6 @@ class StationLevelDiagnosisTests(unittest.TestCase):
                 "station_cluster_profile",
                 "cluster_model_selection",
                 "summary_with_clusters",
-                "report",
                 "category_count_bar_chart",
                 "history_days_histogram",
                 "cluster_profile_heatmap",
@@ -112,10 +111,6 @@ class StationLevelDiagnosisTests(unittest.TestCase):
             cluster_selection = pd.read_csv(written["cluster_model_selection"])
             self.assertIn("selected", cluster_selection.columns)
             self.assertGreaterEqual(len(cluster_selection), 1)
-
-            report_text = Path(written["report"]).read_text()
-            self.assertIn("Station Universe Validation", report_text)
-            self.assertIn("Final Recommendation", report_text)
 
 
 if __name__ == "__main__":

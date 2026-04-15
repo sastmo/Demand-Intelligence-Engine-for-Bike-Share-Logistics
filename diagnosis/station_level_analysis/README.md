@@ -2,8 +2,6 @@
 
 This folder is for station-level diagnosis artifacts and notes.
 
-It does not contain the live implementation code anymore.
-
 Use this runner:
 
 ```bash

@@ -10,7 +10,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "src"))
 
-from forecasting_diagnostics import DiagnosticConfig, run_forecasting_diagnostics
+from metro_bike_share_forecasting.system_level.diagnosis import DiagnosticConfig, run_forecasting_diagnostics
 
 
 DEFAULT_OUTPUT_ROOT = Path("diagnosis/system_level_analysis/outputs")
@@ -131,10 +131,6 @@ def main() -> None:
     print(f"Output root: {result.output_root}")
     print(f"Figures: {result.figures_dir}")
     print(f"Tables: {result.tables_dir}")
-    print(f"Report: {result.report_path}")
-    print("Top recommendations:")
-    for item in result.summary.get("recommendations", [])[:5]:
-        print(f"- {item}")
 
 
 if __name__ == "__main__":

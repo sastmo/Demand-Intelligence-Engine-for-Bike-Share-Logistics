@@ -12,7 +12,6 @@ OUTPUT_SUBDIRECTORIES = (
     "forecasts",
     "metrics",
     "backtests",
-    "reports",
     "models",
     "feature_artifacts",
     "figures",

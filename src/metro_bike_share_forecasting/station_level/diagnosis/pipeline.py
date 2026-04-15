@@ -14,7 +14,6 @@ from metro_bike_share_forecasting.station_level.diagnosis.features import (
     build_station_inventory,
     build_station_summary_table,
 )
-from metro_bike_share_forecasting.station_level.diagnosis.reports import build_station_markdown_report
 from metro_bike_share_forecasting.station_level.diagnosis.utils import (
     ensure_analysis_directories,
     load_station_daily_data,
@@ -37,7 +36,7 @@ def build_station_level_diagnosis(
     target_col: str,
     config: StationDiagnosisConfig | None = None,
 ) -> dict[str, str]:
-    """Build the station-level diagnosis package and persist tables, figures, and report."""
+    """Build the station-level diagnosis package and persist tables and figures."""
 
     config = config or StationDiagnosisConfig()
     paths = ensure_analysis_directories(config)
@@ -75,15 +74,5 @@ def build_station_level_diagnosis(
         ),
     }
 
-    report_path = build_station_markdown_report(
-        inventory=inventory,
-        summary_with_clusters=with_clusters,
-        category_summary=category_summary,
-        cluster_profile=cluster_profile,
-        cluster_selection=cluster_selection,
-        config=config,
-        output_path=paths["reports"] / "station_level_diagnosis_summary.md",
-    )
-    written["report"] = str(report_path)
     written.update({label: path for label, path in figure_paths.items()})
     return written

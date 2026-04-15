@@ -31,8 +31,7 @@ class DiagnosticsRunnerTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("Forecasting diagnostics completed.", result.stdout)
             self.assertTrue((output_root / "figures" / "series.png").exists())
-            self.assertTrue((output_root / "tables" / "diagnostics_summary.json").exists())
-            self.assertTrue((output_root / "reports" / "diagnostics_report.md").exists())
+            self.assertTrue((output_root / "tables" / "diagnostics_summary.csv").exists())
 
     def test_runner_filters_segment_and_date_window(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -73,7 +72,7 @@ class DiagnosticsRunnerTests(unittest.TestCase):
             ]
             result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertTrue((output_root / "tables" / "diagnostics_summary.json").exists())
+            self.assertTrue((output_root / "tables" / "diagnostics_summary.csv").exists())
             self.assertTrue((output_root / "figures" / "series.png").exists())
 
 

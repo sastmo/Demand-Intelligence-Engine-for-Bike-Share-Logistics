@@ -13,16 +13,12 @@ from metro_bike_share_forecasting.station_level.diagnosis.features.summary_featu
     build_station_inventory,
     build_station_summary_table,
 )
-from metro_bike_share_forecasting.station_level.diagnosis.model_readiness import (
-    build_station_modeling_readiness_package,
-)
 from metro_bike_share_forecasting.station_level.diagnosis.visualization.build_station_visuals import build_station_visuals
 
 __all__ = [
     "StationDiagnosisConfig",
     "assign_station_categories",
     "build_station_inventory",
-    "build_station_modeling_readiness_package",
     "build_station_summary_table",
     "build_station_visuals",
     "cluster_station_summary",

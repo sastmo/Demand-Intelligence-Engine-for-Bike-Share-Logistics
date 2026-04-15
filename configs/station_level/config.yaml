@@ -1,0 +1,49 @@
+input:
+  daily_aggregate_path: data/processed/daily_aggregate.csv.gz
+  diagnosis_summary_path: diagnosis/station_level_analysis/outputs/tables/station_summary_with_clusters.csv
+  date_column: bucket_start
+  station_column: segment_id
+  target_column: trip_count
+  segment_type: start_station
+  in_service_column: is_observed
+
+forecast:
+  main_horizons: [7, 30]
+  extended_horizon: 90
+
+features:
+  lags: [1, 7, 14]
+  rolling_windows: [7, 28]
+  holiday_country: US
+  include_category_feature: false
+  include_cluster_feature: false
+
+backtest:
+  initial_train_size: 365
+  step_size: 30
+  max_folds: 4
+  recent_activity_window_days: 90
+  min_recent_service_days: 3
+
+models:
+  baselines:
+    naive: true
+    seasonal_naive_7: true
+  tree:
+    lgbm: true
+    xgboost: true
+  deep:
+    deepar: true
+
+training:
+  random_state: 42
+  tune_enabled: false
+  deepar_context_length: 28
+  deepar_hidden_size: 32
+  deepar_embedding_dim: 16
+  deepar_batch_size: 2048
+  deepar_epochs: 3
+  deepar_learning_rate: 0.001
+
+output:
+  root: forecasts/station_level

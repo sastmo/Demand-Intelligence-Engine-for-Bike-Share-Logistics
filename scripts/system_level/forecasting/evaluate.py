@@ -12,15 +12,13 @@ sys.path.insert(0, str(ROOT / "src"))
 from metro_bike_share_forecasting.system_level.forecasting.config import load_system_level_config
 from metro_bike_share_forecasting.system_level.forecasting.data import ensure_output_directories, write_dataframe
 from metro_bike_share_forecasting.system_level.forecasting.evaluation import (
-    build_recommendation_table,
     plot_model_comparison,
     summarize_backtest_metrics,
-    write_system_level_summary,
 )
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Evaluate system-level backtests and produce recommendation artifacts.")
+    parser = argparse.ArgumentParser(description="Evaluate system-level backtests and produce tables and figures.")
     parser.add_argument("--config", default="configs/system_level/config.yaml")
     args = parser.parse_args()
 
@@ -31,17 +29,9 @@ def main() -> None:
         raise FileNotFoundError(f"Expected backtest metrics at {metrics_path}. Run backtest.py first.")
     metrics = pd.read_csv(metrics_path, parse_dates=["train_start", "train_end", "test_start", "test_end"])
     summary = summarize_backtest_metrics(metrics)
-    recommendations = build_recommendation_table(summary)
     write_dataframe(summary, directories["metrics"] / "system_level_model_comparison.csv")
-    write_dataframe(recommendations, directories["metrics"] / "system_level_recommendations.csv")
     plot_model_comparison(summary, directories["figures"] / "system_level_model_comparison.png")
-    report_path = write_system_level_summary(
-        config,
-        recommendations,
-        summary,
-        directories["reports"] / "system_level_summary.md",
-    )
-    print(f"Wrote system-level evaluation report to {report_path}")
+    print(f"Wrote system-level evaluation tables and figures to {config.output_root}")
 
 
 if __name__ == "__main__":

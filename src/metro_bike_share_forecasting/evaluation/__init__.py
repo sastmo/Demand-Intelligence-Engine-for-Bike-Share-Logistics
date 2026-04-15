@@ -1,2 +1,0 @@
-"""Backtesting and metrics."""
-

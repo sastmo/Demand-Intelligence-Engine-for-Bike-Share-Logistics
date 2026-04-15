@@ -5,9 +5,31 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-from metro_bike_share_forecasting.evaluation.metrics import bias, mae, mase, rmse
 from metro_bike_share_forecasting.system_level.forecasting.config import SystemLevelConfig
 from metro_bike_share_forecasting.system_level.forecasting.models import MODEL_DIAGNOSTIC_COLUMNS, MODEL_REGISTRY
+
+
+def _mae(actual: pd.Series, predicted: pd.Series) -> float:
+    return float(np.mean(np.abs(actual - predicted)))
+
+
+def _rmse(actual: pd.Series, predicted: pd.Series) -> float:
+    return float(np.sqrt(np.mean(np.square(actual - predicted))))
+
+
+def _mase(actual: pd.Series, predicted: pd.Series, training_series: pd.Series, season_length: int) -> float:
+    training_array = pd.Series(training_series).dropna().to_numpy(dtype=float)
+    if len(training_array) <= max(season_length, 1):
+        naive_errors = np.abs(np.diff(training_array)) if len(training_array) > 1 else np.array([1.0])
+    else:
+        naive_errors = np.abs(training_array[season_length:] - training_array[:-season_length])
+    scale = float(np.mean(naive_errors)) if len(naive_errors) else 1.0
+    scale = scale if scale else 1.0
+    return float(np.mean(np.abs(actual - predicted)) / scale)
+
+
+def _bias(actual: pd.Series, predicted: pd.Series) -> float:
+    return float(np.mean(predicted - actual))
 
 
 @dataclass(frozen=True)
@@ -69,10 +91,10 @@ def evaluate_prediction_window(window: RollingWindow, forecast_frame: pd.DataFra
         "train_end": window.train_end,
         "test_start": window.test_start,
         "test_end": window.test_end,
-        "mae": mae(merged["target"], merged["prediction"]),
-        "rmse": rmse(merged["target"], merged["prediction"]),
-        "mase": mase(merged["target"], merged["prediction"], window.train_frame["target"], season_length=7),
-        "bias": bias(merged["target"], merged["prediction"]),
+        "mae": _mae(merged["target"], merged["prediction"]),
+        "rmse": _rmse(merged["target"], merged["prediction"]),
+        "mase": _mase(merged["target"], merged["prediction"], window.train_frame["target"], season_length=7),
+        "bias": _bias(merged["target"], merged["prediction"]),
     }
 
 

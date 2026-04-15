@@ -11,3 +11,4 @@ PyYAML>=6.0,<7.0
 holidays>=0.50
 ruptures>=1.1
 streamlit>=1.35,<2.0
+torch>=2.0,<3.0

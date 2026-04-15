@@ -1,2 +1,0 @@
-"""Champion-challenger selection."""
-
