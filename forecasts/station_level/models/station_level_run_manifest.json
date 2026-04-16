@@ -1,0 +1,17 @@
+{
+  "scope": "station_level",
+  "requested_model": "all",
+  "enabled_models": [
+    "naive",
+    "seasonal_naive_7",
+    "lgbm",
+    "xgboost",
+    "deepar"
+  ],
+  "forecast_horizons": [
+    7,
+    30
+  ],
+  "extended_horizon": 90,
+  "tuned": false
+}

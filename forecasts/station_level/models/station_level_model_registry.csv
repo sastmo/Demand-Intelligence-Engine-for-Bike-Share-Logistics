@@ -1,0 +1,6 @@
+model_name,scope,family
+naive,station_level,baseline
+seasonal_naive_7,station_level,baseline
+lgbm,station_level,tree
+xgboost,station_level,tree
+deepar,station_level,deep

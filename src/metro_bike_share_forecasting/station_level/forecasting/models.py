@@ -70,8 +70,8 @@ def _encode_features(
     for column in [name for name in CAT_FEATURES if name in encoded.columns]:
         if column not in categorical_maps:
             values = pd.Index(encoded[column].fillna("unknown").astype(str).unique().tolist())
-            categorical_maps[column] = {value: index for index, value in enumerate(sorted(values))}
-        encoded[column] = encoded[column].fillna("unknown").astype(str).map(categorical_maps[column]).fillna(-1).astype(int)
+            categorical_maps[column] = {value: index for index, value in enumerate(sorted(values), start=1)}
+        encoded[column] = encoded[column].fillna("unknown").astype(str).map(categorical_maps[column]).fillna(0).astype(int)
 
     for column in encoded.columns:
         encoded[column] = pd.to_numeric(encoded[column], errors="coerce")

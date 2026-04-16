@@ -124,6 +124,8 @@ def main(argv: list[str] | None = None) -> None:
         return
 
     if args.task == "forecast" and args.level == "station":
+        if str(args.model).lower() != "all":
+            raise SystemExit("Station forecast CLI currently supports only --model all.")
         config = load_station_level_config(args.config or "configs/station_level/config.yaml")
         summary = run_station_level_pipeline(config, model=args.model, tune=args.tune)
         print("station forecast complete")
@@ -132,3 +134,7 @@ def main(argv: list[str] | None = None) -> None:
         return
 
     raise SystemExit("Unsupported command.")
+
+
+if __name__ == "__main__":
+    main()

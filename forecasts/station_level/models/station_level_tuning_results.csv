@@ -1,0 +1,16 @@
+model_name,candidate_rank,selected,learning_rate,max_depth,n_estimators,validation_mae,fold_id,hidden_size
+lgbm,1,True,0.05,6.0,250.0,,1,
+xgboost,1,True,0.05,4.0,250.0,,1,
+deepar,1,True,0.001,,,,1,32.0
+lgbm,1,True,0.05,6.0,250.0,,2,
+xgboost,1,True,0.05,4.0,250.0,,2,
+deepar,1,True,0.001,,,,2,32.0
+lgbm,1,True,0.05,6.0,250.0,,3,
+xgboost,1,True,0.05,4.0,250.0,,3,
+deepar,1,True,0.001,,,,3,32.0
+lgbm,1,True,0.05,6.0,250.0,,4,
+xgboost,1,True,0.05,4.0,250.0,,4,
+deepar,1,True,0.001,,,,4,32.0
+lgbm,1,True,0.05,6.0,250.0,,0,
+xgboost,1,True,0.05,4.0,250.0,,0,
+deepar,1,True,0.001,,,,0,32.0

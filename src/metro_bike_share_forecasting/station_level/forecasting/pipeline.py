@@ -29,9 +29,9 @@ from metro_bike_share_forecasting.station_level.forecasting.models import (
     MODEL_DIAGNOSTIC_COLUMNS,
     fit_deepar_model,
     fit_tree_model,
-    predict_deepar,
     predict_naive,
     predict_seasonal_naive_7,
+    predict_with_deepar,
     predict_with_tree,
 )
 from metro_bike_share_forecasting.system_level.forecasting.intervals import (
@@ -50,13 +50,9 @@ MODEL_REGISTRY = {
 
 def _selected_model_keys(config: StationLevelForecastConfig, model: str) -> list[str]:
     model = model.lower()
-    if model == "all":
-        return config.enabled_model_keys
-    if model == "baseline":
-        return [name for name, enabled in config.baselines_enabled.items() if enabled]
-    if model in {"lgbm", "xgboost", "deepar"}:
-        return [model]
-    raise ValueError(f"Unsupported station model selection: {model}")
+    if model != "all":
+        raise ValueError("Station-level forecasting currently supports only model='all'.")
+    return config.enabled_model_keys
 
 
 def _attach_slice_lookup(frame: pd.DataFrame, slice_lookup: pd.DataFrame) -> pd.DataFrame:
@@ -108,7 +104,7 @@ def _predict_station_model(
     if model_name in {"lgbm", "xgboost"}:
         return predict_with_tree(fitted, train_panel, forecast_dates, station_ids, config, slice_lookup)
     if model_name == "deepar":
-        return predict_deepar(fitted, train_panel, forecast_dates, station_ids, config, slice_lookup)
+        return predict_with_deepar(fitted, train_panel, forecast_dates, station_ids, config, slice_lookup)
     raise ValueError(f"Unsupported station model: {model_name}")
 
 
@@ -248,6 +244,10 @@ def run_station_level_pipeline(
     tuning_results = pd.concat(tuning_tables + production_tuning_tables, ignore_index=True) if tuning_tables or production_tuning_tables else pd.DataFrame()
     if not tuning_results.empty:
         write_dataframe(tuning_results, directories["models"] / "station_level_tuning_results.csv")
+    else:
+        tuning_path = directories["models"] / "station_level_tuning_results.csv"
+        if tuning_path.exists():
+            tuning_path.unlink()
 
     model_registry = pd.DataFrame(
         [
@@ -259,6 +259,7 @@ def run_station_level_pipeline(
     write_json(
         {
             "scope": "station_level",
+            "requested_model": model,
             "enabled_models": model_keys,
             "forecast_horizons": list(config.forecast_horizons),
             "extended_horizon": config.extended_horizon,
