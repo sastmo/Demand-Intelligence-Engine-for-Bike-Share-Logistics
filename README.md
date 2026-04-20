@@ -1,11 +1,13 @@
 # Metro Bike Share Demand Intelligence
 
-![Question](https://img.shields.io/badge/Question-Where%20is%20demand%20going%20next%3F-69BE45?style=flat-square)
-![Users](https://img.shields.io/badge/Users-Planning%20%2B%20Operations-2F80C9?style=flat-square)
-![Design](https://img.shields.io/badge/Design-Legacy%20Base%20%2B%20Revised%20Forecasting%20Stack-2F80C9?style=flat-square)
-![Views](https://img.shields.io/badge/Views-System%20%2B%20Station-2F80C9?style=flat-square)
+![Core Question](https://img.shields.io/badge/Core%20Question-Where%20is%20demand%20going%20next%3F-69BE45?style=flat-square)
+![Scope](https://img.shields.io/badge/Scope-System%20%2B%20Station%20Level-2F80C9?style=flat-square)
+![Forecasting](https://img.shields.io/badge/Forecasting-Multi--Horizon%20Forecasting%20System-2F80C9?style=flat-square)
+![Validation](https://img.shields.io/badge/Validation-Backtesting%20Framework-2F80C9?style=flat-square)
+![Uncertainty](https://img.shields.io/badge/Uncertainty-Forecast%20Intervals%20Exposed-2F80C9?style=flat-square)
 ![Evaluation](https://img.shields.io/badge/Evaluation-Horizon%20%2B%20Slice%20Aware-2F80C9?style=flat-square)
-![Delivery](https://img.shields.io/badge/Delivery-Artifacts%20%2B%20Dashboard-E88A45?style=flat-square)
+![Production](https://img.shields.io/badge/Production-End--to--End%20Pipeline-E88A45?style=flat-square)
+![Output](https://img.shields.io/badge/Output-Artifacts%20%2B%20Dashboard-E88A45?style=flat-square)
 
 
 Metro Bike Share does not have one demand problem.
@@ -106,7 +108,6 @@ The easiest way to understand the system is to read it as four connected pipelin
 
 [Open the dashboard demo video](dashboard/dashboard-demo.mov)
 
-
 ---
 
 ## Quick start
@@ -123,12 +124,6 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python -m pip install -e .
-```
-
-Optional:
-
-```bash
-cp .env.example .env
 ```
 
 Set `POSTGRES_URL` only if you want PostgreSQL persistence.
