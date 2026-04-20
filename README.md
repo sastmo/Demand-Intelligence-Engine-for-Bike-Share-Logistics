@@ -1,31 +1,12 @@
 # Metro Bike Share Demand Intelligence
 
-<div style="display:flex;flex-wrap:wrap;gap:6px 8px;margin:6px 0 14px 0;">
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Question</span>
-    <span style="background:#69BE45;color:#FFFFFF;padding:5px 9px;">Where is demand going next?</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Users</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Planning + Operations</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Design</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Legacy Base + Revised Forecasting Stack</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Views</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">System + Station</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Evaluation</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Horizon + Slice Aware</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Delivery</span>
-    <span style="background:#E88A45;color:#FFFFFF;padding:5px 9px;">Artifacts + Dashboard</span>
-  </span>
-</div>
+![Question](https://img.shields.io/badge/Question-Where%20is%20demand%20going%20next%3F-69BE45?style=flat-square)
+![Users](https://img.shields.io/badge/Users-Planning%20%2B%20Operations-2F80C9?style=flat-square)
+![Design](https://img.shields.io/badge/Design-Legacy%20Base%20%2B%20Revised%20Forecasting%20Stack-2F80C9?style=flat-square)
+![Views](https://img.shields.io/badge/Views-System%20%2B%20Station-2F80C9?style=flat-square)
+![Evaluation](https://img.shields.io/badge/Evaluation-Horizon%20%2B%20Slice%20Aware-2F80C9?style=flat-square)
+![Delivery](https://img.shields.io/badge/Delivery-Artifacts%20%2B%20Dashboard-E88A45?style=flat-square)
+
 
 Metro Bike Share does not have one demand problem.
 
