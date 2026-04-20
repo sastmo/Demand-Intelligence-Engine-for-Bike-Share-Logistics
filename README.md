@@ -117,7 +117,7 @@ The easiest way to understand the system is to read it as four connected pipelin
 Use a non-system Python `>=3.10` such as Homebrew Python on macOS.
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/sastmo/Metro-Bike-Share.git
 cd Metro-Bike-Share
 /opt/homebrew/bin/python3.12 -m venv .venv
 source .venv/bin/activate
