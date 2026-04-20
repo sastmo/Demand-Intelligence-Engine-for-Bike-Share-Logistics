@@ -2,10 +2,11 @@
 
 ![EDA](https://img.shields.io/badge/EDA-Data%20Analysis-2F80C9?style=flat-square)
 ![Time Series](https://img.shields.io/badge/Time%20Series-Diagnosis-2F80C9?style=flat-square)
-![Forecasting](https://img.shields.io/badge/Forecasting-Station%20Level-69BE45?style=flat-square)
+![Station Level](https://img.shields.io/badge/Station%20Level-Forecasting-69BE45?style=flat-square)
 ![Segmentation](https://img.shields.io/badge/Segmentation-Slices-2F80C9?style=flat-square)
-![Maturity](https://img.shields.io/badge/Maturity-Signal%20Quality- E88A45?style=flat-square)
+![Maturity](https://img.shields.io/badge/Maturity-Signal%20Quality-E88A45?style=flat-square)
 ![Modeling](https://img.shields.io/badge/Modeling-Global%20Station--Day-2F80C9?style=flat-square)
+
 A summary of what the station network looks like, why station behavior is not uniform, and what that means for the next forecasting step.
 
 ## What This Covers
