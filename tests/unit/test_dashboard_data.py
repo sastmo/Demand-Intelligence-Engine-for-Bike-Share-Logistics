@@ -2,19 +2,16 @@ from __future__ import annotations
 
 import tempfile
 import unittest
-from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
-import sys
-
-sys.path.insert(0, str(ROOT / "src"))
-
-from metro_bike_share_forecasting.dashboard.data import prediction_column, station_forecast_chart_frame
+from dashboard.data import prediction_column, station_forecast_chart_frame
 
 
 class DashboardDataTests(unittest.TestCase):
+    def test_dashboard_data_import_resolves_from_canonical_package(self) -> None:
+        self.assertTrue(callable(prediction_column))
+
     def test_prediction_column_prefers_point_forecast(self) -> None:
         frame = pd.DataFrame({"prediction": [1.0], "point_forecast": [2.0]})
         self.assertEqual(prediction_column(frame), "point_forecast")

@@ -1,6 +1,7 @@
 input:
   daily_aggregate_path: data/processed/daily_aggregate.csv.gz
-  diagnosis_summary_path: diagnosis/station_level_analysis/outputs/tables/station_summary_with_clusters.csv
+  diagnosis_summary_path: diagnosis/station_level/outputs/tables/station_summary_with_clusters.csv
+  frequency: daily
   date_column: bucket_start
   station_column: segment_id
   target_column: trip_count
@@ -22,6 +23,7 @@ backtest:
   initial_train_size: 365
   step_size: 30
   max_folds: 4
+  mase_season_length: 7
   recent_activity_window_days: 90
   min_recent_service_days: 3
 

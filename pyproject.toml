@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metro-bike-share-forecasting"
+version = "0.1.0"
+description = "Forecasting, diagnosis, and dashboard tooling for Metro Bike Share."
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.scripts]
+metro-bike-share = "system_level.cli:main"
+metro-bike-share-system-forecast = "system_level.forecasting.cli:main"
+metro-bike-share-station-forecast = "station_level.forecasting.cli:main"
+metro-bike-share-dashboard = "dashboard.app:run_dashboard"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dashboard = ["assets/*.css", "content/pages/*.json"]

@@ -1,14 +1,9 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
-import sys
 
-ROOT = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(ROOT / "src"))
-
-from metro_bike_share_forecasting.station_level.diagnosis.config import StationDiagnosisConfig
-from metro_bike_share_forecasting.station_level.diagnosis.pipeline import build_station_level_diagnosis
+from station_level.diagnosis.config import StationDiagnosisConfig
+from station_level.diagnosis.pipeline import build_station_level_diagnosis
 
 
 def main() -> None:

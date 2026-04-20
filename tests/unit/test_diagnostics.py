@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -8,11 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "src"))
-
-from metro_bike_share_forecasting.system_level.diagnosis import DiagnosticConfig, run_forecasting_diagnostics
+from system_level.diagnosis import DiagnosticConfig, run_forecasting_diagnostics
 
 
 class DiagnosticsTests(unittest.TestCase):
@@ -40,7 +35,9 @@ class DiagnosticsTests(unittest.TestCase):
             self.assertEqual(summary["frequency"], "daily")
             self.assertIsNotNone(summary["trend_strength"])
             self.assertIsNotNone(summary["seasonal_strength"])
-            self.assertLess(summary["seasonal_naive_mae"], summary["naive_mae"])
+            self.assertLess(summary["baseline_screening_seasonal_naive_mae"], summary["baseline_screening_naive_mae"])
+            self.assertEqual(summary["baseline_screening_scope"], "in_sample_screening_only")
+            self.assertTrue((output_dir / "report" / "diagnostics_report.md").exists())
 
             expected_files = [
                 output_dir / "figures" / "series.png",
@@ -56,6 +53,10 @@ class DiagnosticsTests(unittest.TestCase):
                 output_dir / "tables" / "weekday_profile.csv",
                 output_dir / "tables" / "monthly_profile.csv",
                 output_dir / "tables" / "diagnostics_summary.csv",
+                output_dir / "tables" / "diagnostics_summary.json",
+                output_dir / "tables" / "prepared_time_index.csv",
+                output_dir / "tables" / "dependency_status.csv",
+                output_dir / "tables" / "diagnostic_series_usage.csv",
             ]
             for path in expected_files:
                 self.assertTrue(path.exists(), str(path))
@@ -86,6 +87,7 @@ class DiagnosticsTests(unittest.TestCase):
             ).summary
 
             self.assertTrue(summary["multiple_seasonalities_detected"])
+            self.assertEqual(summary["frequency_domain_status"], "ok")
             self.assertTrue((output_dir / "tables" / "diagnostics_summary.csv").exists())
 
 

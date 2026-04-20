@@ -7,16 +7,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
-import sys
-
-sys.path.insert(0, str(ROOT / "src"))
-
-from metro_bike_share_forecasting.cli import main as cli_main
-from metro_bike_share_forecasting.station_level.diagnosis.config import StationDiagnosisConfig
-from metro_bike_share_forecasting.station_level.diagnosis.pipeline import build_station_level_diagnosis
-from metro_bike_share_forecasting.station_level.forecasting.config import StationLevelForecastConfig
-from metro_bike_share_forecasting.station_level.forecasting.pipeline import run_station_level_pipeline
+from system_level.cli import main as cli_main
+from station_level.diagnosis.config import StationDiagnosisConfig
+from station_level.diagnosis.pipeline import build_station_level_diagnosis
+from station_level.forecasting.config import StationLevelForecastConfig
+from station_level.forecasting.pipeline import run_station_level_pipeline
 
 
 class StationLevelDiagnosisTests(unittest.TestCase):
@@ -62,7 +57,7 @@ class StationLevelDiagnosisTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             input_path = root / "station_daily.csv"
-            output_dir = root / "station_level_analysis" / "outputs"
+            output_dir = root / "station_level" / "outputs"
 
             frame = self._build_station_frame()
             frame.to_csv(input_path, index=False)
@@ -89,9 +84,9 @@ class StationLevelDiagnosisTests(unittest.TestCase):
                 "station_cluster_profile",
                 "cluster_model_selection",
                 "summary_with_clusters",
-                "category_count_bar_chart",
-                "history_days_histogram",
-                "cluster_profile_heatmap",
+                "behavior_count_bar_chart",
+                "history_group_count_bar_chart",
+                "cluster_count_bar_chart",
             }
             self.assertTrue(required_keys.issubset(written.keys()))
             for key in required_keys:
@@ -165,6 +160,7 @@ class StationLevelDiagnosisTests(unittest.TestCase):
                 project_root=root,
                 daily_aggregate_path=aggregate_path,
                 diagnosis_summary_path=diagnosis_path,
+                frequency="daily",
                 date_column="bucket_start",
                 station_column="segment_id",
                 target_column="trip_count",
@@ -180,6 +176,7 @@ class StationLevelDiagnosisTests(unittest.TestCase):
                 initial_train_size=90,
                 step_size=20,
                 max_folds=2,
+                mase_season_length=7,
                 recent_activity_window_days=60,
                 min_recent_service_days=3,
                 baselines_enabled={"naive": True, "seasonal_naive_7": True},
@@ -200,14 +197,22 @@ class StationLevelDiagnosisTests(unittest.TestCase):
             self.assertGreater(summary["forecast_rows"], 0)
 
             comparison = pd.read_csv(output_root / "metrics" / "station_level_model_comparison.csv")
+            self.assertIn("implementation", comparison.columns)
             self.assertTrue({"naive", "seasonal_naive_7", "lgbm", "xgboost", "deepar"}.issubset(set(comparison["model_name"])))
 
             future = pd.read_csv(output_root / "forecasts" / "station_level_future_forecasts.csv")
+            self.assertIn("implementation", future.columns)
             self.assertTrue({"naive", "seasonal_naive_7", "lgbm", "xgboost", "deepar"}.issubset(set(future["model_name"])))
 
             manifest = pd.read_json(output_root / "models" / "station_level_run_manifest.json", typ="series")
             self.assertEqual(manifest["requested_model"], "all")
             self.assertTrue((output_root / "models" / "station_level_model_registry.csv").exists())
+            self.assertTrue((output_root / "models" / "station_level_runtime_environment.json").exists())
+            self.assertTrue((output_root / "models" / "station_level_package_report.csv").exists())
+            self.assertTrue((output_root / "models" / "station_level_runtime_notes.txt").exists())
+            self.assertTrue((output_root / "models" / "station_level_configured_model_status.csv").exists())
+            self.assertTrue((output_root / "metrics" / "station_level_recommended_models.csv").exists())
+            self.assertTrue((output_root / "feature_artifacts" / "station_level_features.csv").exists())
 
 
 if __name__ == "__main__":

@@ -1,0 +1,9 @@
+package,installed,importable,version,detail
+numpy,True,True,2.4.4,
+pandas,True,True,2.3.3,
+scipy,True,True,1.17.1,
+sklearn,True,True,1.8.0,
+statsmodels,True,True,0.14.6,
+torch,True,True,2.11.0,
+lightgbm,True,True,4.6.0,
+xgboost,True,True,3.2.0,

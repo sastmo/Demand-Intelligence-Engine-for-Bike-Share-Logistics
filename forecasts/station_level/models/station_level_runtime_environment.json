@@ -1,0 +1,9 @@
+{
+  "python_version": "3.12.13",
+  "python_supported": true,
+  "platform": "macOS-15.1-arm64-arm-64bit",
+  "virtualenv": true,
+  "include_system_site_packages": false,
+  "libomp_available": true,
+  "libomp_detail": "/opt/homebrew/opt/libomp/lib/libomp.dylib"
+}

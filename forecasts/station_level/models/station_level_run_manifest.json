@@ -13,5 +13,6 @@
     30
   ],
   "extended_horizon": 90,
-  "tuned": false
+  "tuned": false,
+  "mase_season_length": 7
 }

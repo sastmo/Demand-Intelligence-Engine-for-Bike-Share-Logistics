@@ -7,8 +7,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from system_level.common.cli_utils import discover_project_root
 
-ROOT = Path(__file__).resolve().parents[2]
+
+ROOT = discover_project_root(__file__)
 RUNNER = ROOT / "scripts" / "system_level" / "diagnosis" / "run_diagnostics.py"
 
 
@@ -32,6 +34,7 @@ class DiagnosticsRunnerTests(unittest.TestCase):
             self.assertIn("Forecasting diagnostics completed.", result.stdout)
             self.assertTrue((output_root / "figures" / "series.png").exists())
             self.assertTrue((output_root / "tables" / "diagnostics_summary.csv").exists())
+            self.assertTrue((output_root / "report" / "diagnostics_report.md").exists())
 
     def test_runner_filters_segment_and_date_window(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -74,6 +77,7 @@ class DiagnosticsRunnerTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertTrue((output_root / "tables" / "diagnostics_summary.csv").exists())
             self.assertTrue((output_root / "figures" / "series.png").exists())
+            self.assertTrue((output_root / "report" / "diagnostics_report.md").exists())
 
 
 if __name__ == "__main__":

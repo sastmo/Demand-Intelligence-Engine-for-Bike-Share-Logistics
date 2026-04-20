@@ -8,12 +8,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
-ROOT = Path(__file__).resolve().parents[2]
-import sys
-
-sys.path.insert(0, str(ROOT / "src"))
-
-from metro_bike_share_forecasting.system_level import load_system_level_config, run_system_level_pipeline
+from system_level import load_system_level_config, run_system_level_pipeline
 
 
 class SystemLevelPipelineTests(unittest.TestCase):
@@ -87,6 +82,12 @@ class SystemLevelPipelineTests(unittest.TestCase):
             self.assertTrue((output_root / "backtests" / "system_level_backtest_residuals.csv").exists())
             self.assertTrue((output_root / "metrics" / "system_level_interval_calibration.csv").exists())
             self.assertTrue((output_root / "metrics" / "system_level_interval_coverage.csv").exists())
+            self.assertTrue((output_root / "metrics" / "system_level_recommended_models.csv").exists())
+            self.assertTrue((output_root / "feature_artifacts" / "system_level_features.csv").exists())
+            self.assertTrue((output_root / "models" / "system_level_runtime_environment.json").exists())
+            self.assertTrue((output_root / "models" / "system_level_package_report.csv").exists())
+            self.assertTrue((output_root / "models" / "system_level_runtime_notes.txt").exists())
+            self.assertTrue((output_root / "models" / "system_level_configured_model_status.csv").exists())
 
             future_forecasts = pd.read_csv(output_root / "forecasts" / "system_level_future_forecasts.csv")
             self.assertTrue(

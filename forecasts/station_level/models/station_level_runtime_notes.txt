@@ -1,0 +1,3 @@
+`deepar` currently maps to the local `global_neural_mlp` implementation. It is a lightweight global neural benchmark, not a canonical recurrent DeepAR, so treat it as experimental.
+`deepar_context_length` is currently a config placeholder and is not driving a true sequence encoder. The current network learns from engineered lag features rather than an autoregressive recurrent context window.
+Hyperparameter tuning is disabled in the current station-level config. Current model comparisons use fixed/default settings.

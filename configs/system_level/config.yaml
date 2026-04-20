@@ -4,6 +4,7 @@ input:
   target_column: trip_count
   date_column: bucket_start
   frequency: daily
+  missing_target_strategy: zero_fill_with_flag
   segment_type: system_total
   segment_id: all
 
@@ -21,11 +22,13 @@ features:
   yearly_fourier_order: 3
   external_features_path: ""
   external_date_column: date
+  external_feature_prefixes: [known_, forecast_, planned_, calendar_, event_]
 
 backtest:
   initial_train_size: 730
   step_size: 7
   max_folds: 8
+  mase_season_length: 7
 
 models:
   baselines:

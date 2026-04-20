@@ -1,0 +1,6 @@
+model_name,family,implementation,experimental,native_backend_available,tuning_strategy,note
+naive,baseline,baseline_rule,False,,none,Last-observation carry-forward benchmark.
+seasonal_naive_7,baseline,seasonal_rule,False,,none,Seven-day seasonal naive benchmark.
+lgbm,tree,lightgbm,False,True,fixed_defaults,Native LightGBM if available; otherwise sklearn fallback.
+xgboost,tree,xgboost,False,True,fixed_defaults,Native XGBoost if available; otherwise sklearn fallback.
+deepar,deep,global_neural_mlp,True,True,fixed_defaults,Experimental global neural benchmark; not a canonical recurrent DeepAR implementation.
