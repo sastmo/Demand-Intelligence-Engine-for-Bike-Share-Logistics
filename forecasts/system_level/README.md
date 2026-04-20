@@ -1,31 +1,13 @@
 # Aggregate Network Demand Forecasting
 
-<div style="display:flex;flex-wrap:wrap;gap:6px 8px;margin:6px 0 14px 0;">
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Forecasting</span>
-    <span style="background:#69BE45;color:#FFFFFF;padding:5px 9px;">System Level</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Horizon Design</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Multi-Horizon</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Methods</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Time Series + ML</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Validation</span>
-    <span style="background:#E88A45;color:#FFFFFF;padding:5px 9px;">Walk-Forward</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Metrics</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">MAE RMSE MASE</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Uncertainty</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Confidence Intervals</span>
-  </span>
-</div>
+# Aggregate Network Demand Forecasting
+
+![Forecasting](https://img.shields.io/badge/Forecasting-System%20Level-69BE45?style=flat-square)
+![Horizon](https://img.shields.io/badge/Horizon-Multi--Horizon-2F80C9?style=flat-square)
+![Baselines](https://img.shields.io/badge/Baselines-Naive%20%7C%20Seasonal%20Naive%20%287%2C%2030%29-2F80C9?style=flat-square)
+![Validation](https://img.shields.io/badge/Validation-Walk--Forward%20Backtesting%20%28MASE%29-E88A45?style=flat-square)
+![Metrics](https://img.shields.io/badge/Metrics-MAE%20%7C%20RMSE%20%7C%20MASE-2F80C9?style=flat-square)
+![Uncertainty](https://img.shields.io/badge/Uncertainty-Forecast%20Intervals-2F80C9?style=flat-square)
 
 This module examines forecasting at the **aggregate network level**, where the target is total daily demand across the full system. The goal is to build a reliable system-level view that supports planning, monitoring, and decision-making before moving to more granular forecasting layers.
 
