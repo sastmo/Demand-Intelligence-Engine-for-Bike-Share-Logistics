@@ -5,7 +5,6 @@
 ![Forecasting](https://img.shields.io/badge/Forecasting-Multi--Horizon%20Forecasting%20System-2F80C9?style=flat-square)
 ![Validation](https://img.shields.io/badge/Validation-Backtesting%20Framework-2F80C9?style=flat-square)
 ![Uncertainty](https://img.shields.io/badge/Uncertainty-Forecast%20Intervals%20Exposed-2F80C9?style=flat-square)
-![Evaluation](https://img.shields.io/badge/Evaluation-Horizon%20%2B%20Slice%20Aware-2F80C9?style=flat-square)
 ![Production](https://img.shields.io/badge/Production-End--to--End%20Pipeline-E88A45?style=flat-square)
 ![Output](https://img.shields.io/badge/Output-Artifacts%20%2B%20Dashboard-E88A45?style=flat-square)
 
