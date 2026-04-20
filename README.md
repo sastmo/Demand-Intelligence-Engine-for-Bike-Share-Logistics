@@ -117,10 +117,25 @@ The easiest way to understand the system is to read it as four connected pipelin
 Use a non-system Python `>=3.10` such as Homebrew Python on macOS.
 
 ```bash
+# Clone repo
 git clone https://github.com/sastmo/Metro-Bike-Share.git
 cd Metro-Bike-Share
-/opt/homebrew/bin/python3.12 -m venv .venv
+
+# Create venv
+# Windows:
+py -3.12 -m venv .venv
+# Mac:
+python3.12 -m venv .venv
+
+# Activate venv
+# Windows CMD:
+.venv\Scripts\activate
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+# Mac:
 source .venv/bin/activate
+
+# Install dependencies
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python -m pip install -e .
