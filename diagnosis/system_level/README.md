@@ -1,31 +1,11 @@
 # System-Level Demand Diagnosis
 
-<div style="display:flex;flex-wrap:wrap;gap:6px 8px;margin:6px 0 14px 0;">
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">EDA</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Data Analysis</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Time Series</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Diagnosis</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">System Level</span>
-    <span style="background:#69BE45;color:#FFFFFF;padding:5px 9px;">Forecasting</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Frequency Domain</span>
-    <span style="background:#E88A45;color:#FFFFFF;padding:5px 9px;">Seasonality</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Multi-Horizon</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">7d / 30d / 90d</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Uncertainty</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Intervals</span>
-  </span>
-</div>
+![EDA](https://img.shields.io/badge/EDA-Data%20Analysis-2F80C9?style=flat-square)
+![Time Series](https://img.shields.io/badge/Time%20Series-Diagnosis-2F80C9?style=flat-square)
+![System Level](https://img.shields.io/badge/System%20Level-Forecasting-69BE45?style=flat-square)
+![Frequency Domain](https://img.shields.io/badge/Frequency%20Domain-Seasonality-E88A45?style=flat-square)
+![Multi-Horizon](https://img.shields.io/badge/Multi--Horizon-7d%20%2F%2030d%20%2F%2090d-2F80C9?style=flat-square)
+![Uncertainty](https://img.shields.io/badge/Uncertainty-Intervals-2F80C9?style=flat-square)
 
 A short diagnostic summary of aggregate bike-sharing demand and what it means for forecasting.
 
