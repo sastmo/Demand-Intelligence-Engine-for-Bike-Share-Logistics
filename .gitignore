@@ -12,12 +12,6 @@ outputs/reports/*
 outputs/figures/*
 outputs/forecasts/*
 outputs/diagnostics/tmp/*
-diagnosis/**/outputs/**
-!outputs/reports/.gitkeep
-!outputs/figures/.gitkeep
-!outputs/forecasts/.gitkeep
-!outputs/diagnostics/.gitkeep
-!outputs/diagnostics/tmp/.gitkeep
 !diagnosis/**/outputs/**/.gitkeep
 notebooks/.ipynb_checkpoints/
 
