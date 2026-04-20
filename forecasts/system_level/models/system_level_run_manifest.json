@@ -1,0 +1,17 @@
+{
+  "scope": "system_level",
+  "enabled_models": [
+    "naive",
+    "seasonal_naive_7",
+    "seasonal_naive_30",
+    "ets",
+    "sarimax_dynamic",
+    "fourier_dynamic_regression",
+    "tree_boosting"
+  ],
+  "forecast_horizons": [
+    7,
+    30
+  ],
+  "extended_horizon": 90
+}

@@ -1,0 +1,8 @@
+model_name,scope,family
+naive,system_level,baseline
+seasonal_naive_7,system_level,baseline
+seasonal_naive_30,system_level,baseline
+ets,system_level,classical
+sarimax_dynamic,system_level,classical
+fourier_dynamic_regression,system_level,classical
+tree_boosting,system_level,ml

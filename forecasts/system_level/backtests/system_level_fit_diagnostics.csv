@@ -1,0 +1,29 @@
+model_name,horizon,fit_success,fallback_triggered,fallback_reason,exception_type,warning_count,n_train,n_exog,condition_number,model_runtime_seconds,selected_spec,used_exog_columns
+naive,7,,,,,,,,,,,
+seasonal_naive_7,7,,,,,,,,,,,
+seasonal_naive_30,7,,,,,,,,,,,
+ets,7,,,,,,,,,,,
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.366867922962925,2.2201539159868844,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+fourier_dynamic_regression,7,,,,,,,,,,,
+tree_boosting_fallback,7,,,,,,,,,,,
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.366823619605919,2.9016544169862755,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.366611464491355,2.9466338329948485,"order=(1, 0, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.367023603262,1.0772887920029461,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.435275049231814,2.557550708006602,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.368013379138759,1.0011634579859674,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.367602435032544,1.0646820419933647,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.367425424149315,2.679517999989912,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+naive,30,,,,,,,,,,,
+seasonal_naive_7,30,,,,,,,,,,,
+seasonal_naive_30,30,,,,,,,,,,,
+ets,30,,,,,,,,,,,
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.367666759348499,1.8143982499605045,"order=(1, 0, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+fourier_dynamic_regression,30,,,,,,,,,,,
+tree_boosting_fallback,30,,,,,,,,,,,
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.367479186345423,2.681237749988213,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.36693785942755,1.867085749981925,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.366867922962925,2.145794374984689,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.366823619605919,2.8847809999715537,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.366611464491355,2.9169842079863884,"order=(1, 0, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.367023603262,1.078552957973443,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.435275049231814,2.593969499983359,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3

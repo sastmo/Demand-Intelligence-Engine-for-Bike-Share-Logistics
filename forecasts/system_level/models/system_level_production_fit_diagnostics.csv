@@ -1,0 +1,22 @@
+model_name,horizon,fit_success,fallback_triggered,fallback_reason,exception_type,warning_count,n_train,n_exog,condition_number,model_runtime_seconds,selected_spec,used_exog_columns
+ets,7,,,,,,,,,,,
+ets,30,,,,,,,,,,,
+ets,90,,,,,,,,,,,
+fourier_dynamic_regression,7,,,,,,,,,,,
+fourier_dynamic_regression,30,,,,,,,,,,,
+fourier_dynamic_regression,90,,,,,,,,,,,
+naive,7,,,,,,,,,,,
+naive,30,,,,,,,,,,,
+naive,90,,,,,,,,,,,
+sarimax_dynamic,7,True,False,,,0.0,1095.0,8.0,5.567851093222716,2.8334254999645054,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,30,True,False,,,0.0,1095.0,8.0,5.567851093222716,2.795392791973427,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+sarimax_dynamic,90,True,False,,,0.0,1095.0,8.0,5.567851093222716,2.822969875007402,"order=(0, 1, 1); seasonal_order=(0, 1, 1, 7); trend=n",is_holiday|is_weekend|yearly_cos_1|yearly_cos_2|yearly_cos_3|yearly_sin_1|yearly_sin_2|yearly_sin_3
+seasonal_naive_30,7,,,,,,,,,,,
+seasonal_naive_30,30,,,,,,,,,,,
+seasonal_naive_30,90,,,,,,,,,,,
+seasonal_naive_7,7,,,,,,,,,,,
+seasonal_naive_7,30,,,,,,,,,,,
+seasonal_naive_7,90,,,,,,,,,,,
+tree_boosting_fallback,7,,,,,,,,,,,
+tree_boosting_fallback,30,,,,,,,,,,,
+tree_boosting_fallback,90,,,,,,,,,,,

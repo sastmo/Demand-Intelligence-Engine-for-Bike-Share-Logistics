@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 .env
 .venv/
+dashboard/dashboard-demo.mov
 data/interim/
 data/processed/
 data/station_daily.csv
@@ -11,15 +12,12 @@ outputs/reports/*
 outputs/figures/*
 outputs/forecasts/*
 outputs/diagnostics/tmp/*
-forecasts/system_level/*
 diagnosis/**/outputs/**
 !outputs/reports/.gitkeep
 !outputs/figures/.gitkeep
 !outputs/forecasts/.gitkeep
 !outputs/diagnostics/.gitkeep
 !outputs/diagnostics/tmp/.gitkeep
-!forecasts/system_level/.gitkeep
-!forecasts/system_level/**/.gitkeep
 !diagnosis/**/outputs/**/.gitkeep
 notebooks/.ipynb_checkpoints/
 
