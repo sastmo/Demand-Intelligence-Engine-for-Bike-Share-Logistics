@@ -1,29 +1,12 @@
 # Station-Level Demand Forecasting
 
-<div style="display:flex;flex-wrap:wrap;gap:6px 8px;margin:6px 0 14px 0;">
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Forecasting</span>
-    <span style="background:#69BE45;color:#FFFFFF;padding:5px 9px;">Station Level</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Panel Design</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Service-Aware</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Methods</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Baseline + ML + DeepAR</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Validation</span>
-    <span style="background:#E88A45;color:#FFFFFF;padding:5px 9px;">Rolling Backtest</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Metrics</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">MAE RMSE MASE Bias</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-  </span>
-</div>
+![Forecasting](https://img.shields.io/badge/Forecasting-Station%20Level-69BE45?style=flat-square)
+![Panel](https://img.shields.io/badge/Panel-Service%20Aware-2F80C9?style=flat-square)
+![Horizon](https://img.shields.io/badge/Horizon-Multi--Horizon%20%287%2C%2030%29-2F80C9?style=flat-square)
+![Models](https://img.shields.io/badge/Models-DeepAR%20%7C%20LGBM%20%7C%20XGBoost-2F80C9?style=flat-square)
+![Baselines](https://img.shields.io/badge/Baselines-Naive%20%7C%20Seasonal%20Naive%20%287%29-2F80C9?style=flat-square)
+![Validation](https://img.shields.io/badge/Validation-Rolling%20Backtest%20%28MASE%29-E88A45?style=flat-square)
+![Metrics](https://img.shields.io/badge/Metrics-MAE%20%7C%20RMSE%20%7C%20MASE%20%7C%20Bias-2F80C9?style=flat-square)
 
 This module examines forecasting at the **station-day level**, where the target is daily rides for each station while it is actually in service. Unlike the system-level view, the goal here is not just to forecast total network demand, but to preserve **local operational visibility** across the station network.
 
