@@ -114,25 +114,21 @@ The easiest way to understand the system is to read it as four connected pipelin
 
 ### Setup
 
-Use a non-system Python `>=3.10` such as Homebrew Python on macOS.
+Requires Python 3.10 or newer.
 
 ```bash
 # Clone repo
 git clone https://github.com/sastmo/Metro-Bike-Share.git
 cd Metro-Bike-Share
 
-# Create venv
+# Create and activate virtual environment
 # Windows:
-py -3.12 -m venv .venv
-# Mac:
-python3.12 -m venv .venv
+py -3 -m venv .venv
+.venv\Scripts\activate        # CMD
+.venv\Scripts\Activate.ps1    # PowerShell
 
-# Activate venv
-# Windows CMD:
-.venv\Scripts\activate
-# Windows PowerShell:
-.venv\Scripts\Activate.ps1
-# Mac:
+# macOS / Linux:
+python3 -m venv .venv
 source .venv/bin/activate
 
 # Install dependencies
