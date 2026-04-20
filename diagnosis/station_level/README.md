@@ -1,32 +1,11 @@
 # Station-Level Demand Diagnosis
 
-<div style="display:flex;flex-wrap:wrap;gap:6px 8px;margin:6px 0 14px 0;">
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">EDA</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Data Analysis</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Time Series</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Diagnosis</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Station Level</span>
-    <span style="background:#69BE45;color:#FFFFFF;padding:5px 9px;">Forecasting</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Segmentation</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Slices</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Maturity</span>
-    <span style="background:#E88A45;color:#FFFFFF;padding:5px 9px;">Signal Quality</span>
-  </span>
-  <span style="display:inline-flex;border-radius:6px;overflow:hidden;font-family:Arial,sans-serif;font-size:11px;line-height:1;">
-    <span style="background:#555555;color:#FFFFFF;padding:5px 9px;">Modeling</span>
-    <span style="background:#2F80C9;color:#FFFFFF;padding:5px 9px;">Global Station-Day</span>
-  </span>
-</div>
-
+![EDA](https://img.shields.io/badge/EDA-Data%20Analysis-2F80C9?style=flat-square)
+![Time Series](https://img.shields.io/badge/Time%20Series-Diagnosis-2F80C9?style=flat-square)
+![Forecasting](https://img.shields.io/badge/Forecasting-Station%20Level-69BE45?style=flat-square)
+![Segmentation](https://img.shields.io/badge/Segmentation-Slices-2F80C9?style=flat-square)
+![Maturity](https://img.shields.io/badge/Maturity-Signal%20Quality- E88A45?style=flat-square)
+![Modeling](https://img.shields.io/badge/Modeling-Global%20Station--Day-2F80C9?style=flat-square)
 A summary of what the station network looks like, why station behavior is not uniform, and what that means for the next forecasting step.
 
 ## What This Covers
