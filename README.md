@@ -123,12 +123,8 @@ The easiest way to understand the system is to read it as four connected pipelin
 | Station-Level Forecasting | Build the local station-day operational view | [Station-Level Forecasting](forecasts/station_level) |
 
 
-<p align="center">
-  <video width="95%" controls style="border-radius: 14px; overflow: hidden;">
-    <source src="dashboard/dashboard-demo.mov" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</p>
+[Open the dashboard demo video](dashboard/dashboard-demo.mov)
+
 
 ---
 
