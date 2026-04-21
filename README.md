@@ -48,6 +48,11 @@ That is why the project is structured as an end-to-end workflow that spans data 
 
 ## Two forecasting views, one product story
 
+<p align="center">
+  <img src="dashboard/Station-Level Forecasting.png" width="45%" /><br/>
+  <img src="dashboard/System-Level Forecasting.png" width="45%" />
+</p>
+
 This project uses two views because planning and operations need different kinds of visibility.
 
 ### System view
