@@ -29,38 +29,46 @@ To make that variation readable, we use both categorization and clustering: cate
 
 ## Key Signal Views
 
-### 1. Frequency of Stations by Available History Length
+## Station-Level Data Overview
 
-
-
-![Figure 1 - Overview of observed vs expected stations](outputs/figures/history_days_histogram.png)
-
-_Observed station universe: Station history is highly uneven, with a large mature core and a meaningful short-history tail that should be evaluated separately in forecasting._
-
-### 2. Demand Across Stations
-![Figure 2 - Distribution of station average demand](outputs/figures/avg_demand_histogram.png)
-
-_How average demand is distributed across stations._
-
-### 3. Maturity Profile
-![Figure 3 - Maturity groups chart](outputs/figures/history_group_counts.png)
-
-_Newborn, young, and mature station counts._
-
-### 4. Behavioral Categories
-![Figure 4 - Category mix chart](outputs/figures/category_counts.png)
-
-_Station counts across the behavioral categories._
-
-### 5. Mature-Station Clusters
-![Figure 5 - Cluster mix chart](outputs/figures/cluster_counts.png)
-
-_Counts for mature-station clusters and short-history bucket._
-
-### 6. Signal Quality View
-![Figure 6 - Scatter of avg demand vs zero rate](outputs/figures/avg_demand_vs_zero_rate_by_category.png)
-
-_Reveals which station categories are strong-signal versus sparse or intermittent by comparing average demand with zero-day frequency, helping define forecasting slices and watchlists.._
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>1. History Length Across Stations</h3>
+      <img src="outputs/figures/history_days_histogram.png" alt="Frequency of stations by available history length" width="100%">
+      <p><em>Station history is highly uneven, with a large mature core and a meaningful short-history tail that should be evaluated separately in forecasting.</em></p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>2. Maturity Profile</h3>
+      <img src="outputs/figures/history_group_counts.png" alt="Maturity groups chart" width="100%">
+      <p><em>Counts of newborn, young, and mature stations in the observed network.</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>3. Demand Across Stations</h3>
+      <img src="outputs/figures/avg_demand_histogram.png" alt="Distribution of station average demand" width="100%">
+      <p><em>Average demand is highly skewed across stations, with a small high-demand group and a long low-demand tail.</em></p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>4. Signal Quality View</h3>
+      <img src="outputs/figures/avg_demand_vs_zero_rate_by_category.png" alt="Scatter of average demand vs zero rate by category" width="100%">
+      <p><em>Compares average demand with zero-day frequency to distinguish strong-signal stations from sparse or intermittent ones.</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>5. Behavioral Categories</h3>
+      <img src="outputs/figures/category_counts.png" alt="Category mix chart" width="100%">
+      <p><em>Station counts across the main behavioral categories.</em></p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>6. Mature-Station Clusters</h3>
+      <img src="outputs/figures/cluster_counts.png" alt="Cluster mix chart" width="100%">
+      <p><em>Counts across mature-station clusters, plus the short-history bucket.</em></p>
+    </td>
+  </tr>
+</table>
 
 ### 7. Watchlist Example
 ![Figure 7 - Short-history or sparse-station example](outputs/figures/representative_station_timeseries.png)
@@ -68,7 +76,7 @@ _Reveals which station categories are strong-signal versus sparse or intermitten
 _Why short-history and sparse stations need special handling._
 
 
-## Main Readout
+## Main Takeaways
 - The station network is heterogeneous, not uniform.
 - The observed station universe is broader than the expected operational count.
 - Demand is highly skewed, so one “typical station” is a weak summary.
@@ -98,7 +106,7 @@ The gap between the mean and median shows a strongly skewed network with a small
 
 ## Behavioral Categories
 
-| Category | Count | Readout |
+| Category | Count | Note |
 |---|---:|---|
 | mixed_profile | 123 | Broad middle of usable stations |
 | short_history | 77 | Too new or too incomplete for stable interpretation |
@@ -110,7 +118,7 @@ The gap between the mean and median shows a strongly skewed network with a small
 
 ## Mature-Station Clusters
 
-| Cluster | Count | Readout |
+| Cluster | Count | Note |
 |---|---:|---|
 | cluster_1 | 32 | Strong core with high demand and stronger recurring structure |
 | cluster_2 | 139 | Main operating base of the mature network |
@@ -120,7 +128,7 @@ The gap between the mean and median shows a strongly skewed network with a small
 
 ## Watchouts
 
-| Topic | Readout |
+| Topic | Note |
 |---|---|
 | Raw busiest stations | Can be distorted by one-day short-history records |
 | Sparse stations | Need separate treatment from healthy active stations |
@@ -138,8 +146,6 @@ The gap between the mean and median shows a strongly skewed network with a small
 | Sparse stations | Keep visible, score separately | Important for governance, weak for first-stage selection |
 | Clusters | Use later for refinement | Helpful lens, not the first split |
 
-## Recommended Direction
-The strongest next step is a single global station-day forecasting workflow. Train globally, evaluate by slice, and refine only where the residuals show a real need.
 
 ## Next Step
 Use this diagnosis to benchmark station-day models, report performance by slice, and decide where targeted refinement adds real value.
