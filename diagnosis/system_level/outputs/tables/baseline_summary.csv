@@ -1,0 +1,3 @@
+baseline_name,in_sample_mae,season_length
+naive,10.11349791388586,
+seasonal_naive,6.405481927981056,7.0
