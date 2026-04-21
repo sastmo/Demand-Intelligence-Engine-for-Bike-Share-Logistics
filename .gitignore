@@ -5,6 +5,7 @@ __pycache__/
 .env
 .venv/
 dashboard/dashboard-demo.mov
+data/processed/cleaned_trip_data.csv.gz
 outputs/reports/*
 outputs/figures/*
 outputs/forecasts/*

@@ -1,13 +1,13 @@
 # Metro Bike Share Demand Intelligence
 
-![Core Question](https://img.shields.io/badge/Core%20Question-Where%20is%20demand%20going%20next%3F-69BE45?style=flat-square)
-![Scope](https://img.shields.io/badge/Scope-System%20%2B%20Station%20Level-2F80C9?style=flat-square)
-![Forecasting](https://img.shields.io/badge/Forecasting-Multi--Horizon%20Forecasting%20System-2F80C9?style=flat-square)
-![Validation](https://img.shields.io/badge/Validation-Backtesting%20Framework-2F80C9?style=flat-square)
-![Uncertainty](https://img.shields.io/badge/Uncertainty-Forecast%20Intervals%20Exposed-2F80C9?style=flat-square)
-![Production](https://img.shields.io/badge/Production-End--to--End%20Pipeline-E88A45?style=flat-square)
-![Output](https://img.shields.io/badge/Output-Artifacts%20%2B%20Dashboard-E88A45?style=flat-square)
-
+| At a glance | Value |
+|---|---|
+| Question | Where is demand going next? |
+| Users | Planning + Operations |
+| Design | Legacy Base + Revised Forecasting Stack |
+| Views | System + Station |
+| Evaluation | Horizon + Slice Aware |
+| Delivery | Artifacts + Dashboard |
 
 Metro Bike Share does not have one demand problem.
 
@@ -105,35 +105,42 @@ The easiest way to understand the system is to read it as four connected pipelin
 | Station-Level Forecasting | Build the local station-day operational view | [Station-Level Forecasting](forecasts/station_level) |
 
 
-[Open the dashboard demo video](dashboard/dashboard-demo.mov)
+## Dashboard Demo
 
+You can preview the dashboard through the key sections below:
+
+<p align="center">
+  <img src="dashboard/Station-Level Diagnosis.png" width="45%" />
+  <img src="dashboard/Station-Level Forecasting.png" width="45%" /><br/>
+  <img src="dashboard/System-Level Diagnosis.png" width="45%" />
+  <img src="dashboard/System-Level Forecasting.png" width="45%" />
+</p>
+
+Each image highlights a different section of the dashboard for quick exploration.
+
+[Open the full dashboard demo video](dashboard/dashboard-demo.mov)
 ---
 
 ## Quick start
 
 ### Setup
 
-Requires Python 3.10 or newer.
+Use a non-system Python `>=3.10` such as Homebrew Python on macOS.
 
 ```bash
-# Clone repo
-git clone https://github.com/sastmo/Metro-Bike-Share.git
+git clone <your-repo-url>
 cd Metro-Bike-Share
-
-# Create and activate virtual environment
-# Windows:
-py -3 -m venv .venv
-.venv\Scripts\activate        # CMD
-.venv\Scripts\Activate.ps1    # PowerShell
-
-# macOS / Linux:
-python3 -m venv .venv
+/opt/homebrew/bin/python3.12 -m venv .venv
 source .venv/bin/activate
-
-# Install dependencies
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python -m pip install -e .
+```
+
+Optional:
+
+```bash
+cp .env.example .env
 ```
 
 Set `POSTGRES_URL` only if you want PostgreSQL persistence.
