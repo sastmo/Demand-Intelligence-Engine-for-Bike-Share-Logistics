@@ -24,27 +24,34 @@ _Overall system demand across the full observation window._
 
 _Distribution of aggregate demand values._
 
-### 3. Autocorrelation
-![Figure 3 - Autocorrelation plot](outputs/figures/acf.png)
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>3. Autocorrelation</h3>
+      <img src="outputs/figures/acf.png" alt="Autocorrelation plot" width="100%">
+      <p><em>Correlation of the series with its past lags.</em></p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>4. Seasonal Pattern</h3>
+      <img src="outputs/figures/seasonal_profile.png" alt="Day-of-week or seasonal pattern" width="100%">
+      <p><em>Repeating demand pattern across the weekly cycle.</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>5. Frequency-Domain View</h3>
+      <img src="outputs/figures/periodogram.png" alt="Periodogram or frequency spectrum" width="100%">
+      <p><em>Weekly, monthly, and yearly seasonal structure in the signal.</em></p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>6. Decomposition</h3>
+      <img src="outputs/figures/stl.png" alt="Trend, seasonal, residual decomposition" width="100%">
+      <p><em>Trend, seasonal, and residual components of the series.</em></p>
+    </td>
+  </tr>
+</table>
 
-_Correlation of the series with its past lags._
-
-### 4. Seasonal Pattern
-![Figure 4 - Day-of-week or seasonal pattern](outputs/figures/seasonal_profile.png)
-
-_Repeating demand pattern across the weekly cycle._
-
-### 5. Frequency-Domain View
-![Figure 5 - Periodogram or frequency spectrum](outputs/figures/periodogram.png)
-
-_Weekly, monthly, and yearly seasonal structure in the signal._
-
-### 6. Decomposition
-![Figure 6 - Trend, seasonal, residual decomposition](outputs/figures/stl.png)
-
-_Trend, seasonal, and residual components of the series._
-
-## Main Readout
+## Main Takeaways
 - The aggregate demand signal is forecastable and not random.
 - The series shows persistence and clear seasonality.
 - Frequency analysis suggests recurring weekly, monthly, and yearly structure.
