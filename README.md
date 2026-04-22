@@ -1,11 +1,10 @@
 # Metro Bike Share Demand Intelligence
 
-![Core Question](https://img.shields.io/badge/Core%20Question-Where%20is%20demand%20going%20next%3F-69BE45?style=flat-square)
+![Top Models](https://img.shields.io/badge/Top%20Models-XGBoost%20%7C%20LightGBM%20%7C%20SARIMAX-6A5ACD?style=flat-square)
 ![Scope](https://img.shields.io/badge/Scope-System%20%2B%20Station%20Level-2F80C9?style=flat-square)
-![Forecasting](https://img.shields.io/badge/Forecasting-Multi--Horizon%20Forecasting%20System-2F80C9?style=flat-square)
-![Validation](https://img.shields.io/badge/Validation-Backtesting%20Framework-2F80C9?style=flat-square)
-![Uncertainty](https://img.shields.io/badge/Uncertainty-Forecast%20Intervals%20Exposed-2F80C9?style=flat-square)
-![Production](https://img.shields.io/badge/Production-End--to--End%20Pipeline-E88A45?style=flat-square)
+![Forecasting](https://img.shields.io/badge/Forecasting-Multi--Horizon%20Forecasting-2F80C9?style=flat-square)
+![Benchmarks](https://img.shields.io/badge/Benchmarks-Naive%20%7C%20Seasonal%20Naive%20%7C%20ETS-E88A45?style=flat-square)
+![Validation](https://img.shields.io/badge/Validation-MASE%20Backtesting%20at%207%20and%2030%20Days-2F80C9?style=flat-square)
 ![Output](https://img.shields.io/badge/Output-Artifacts%20%2B%20Dashboard-E88A45?style=flat-square)
 
 Metro Bike Share does not have one demand problem.
@@ -23,9 +22,7 @@ It keeps the original SQL work visible, adds a cleaner warehouse and forecasting
 
 ---
 
-## Why this architecture exists
-
-The architecture is deliberate.
+## Architecture
 
 This project is still worth continuing because many data-oriented initiatives across companies are now being revisited and modernized. In this case, the earlier work was built on a strong foundation, especially in the extraction of business logic and the development of an enhanced data model. 
 
@@ -35,18 +32,18 @@ That foundation should be preserved because it still provides real value. At the
 
 That is why the project is structured as an end-to-end workflow that spans data modeling and standardization through to dashboards and monitoring.:
 
-| Layer | Why it exists | What it gives you |
-|---|---|---|
-| Legacy SQL | Preserve trusted historical logic | Business rules and cleaned foundations |
-| Warehouse Layer | Create a better engineering bridge | Reusable structure, contracts, utilities |
-| Diagnosis | Understand the signal before modeling | Stronger assumptions and cleaner framing |
-| Forecasting | Compare methods in a time-aware way | Actionable predictions at multiple levels |
-| Dashboard | Make results easier to read and share | Faster review and clearer communication |
+| Layer | Purpose & Value |
+|------|----------------|
+| Legacy SQL | Preserves trusted historical logic and provides business rules with cleaned foundations |
+| Warehouse Layer | Creates a stronger engineering bridge with reusable structure, contracts, and utilities |
+| Diagnosis | Helps understand the signal before modeling, leading to better assumptions and cleaner framing |
+| Forecasting | Enables time-aware model comparison and produces actionable predictions at multiple levels |
+| Dashboard | Makes results easier to read and share, supporting faster review and clearer communication |
 
 
 ---
 
-## Two forecasting views, one product story
+## Two forecasting views
 
 <p align="center">
   <img src="dashboard/Station-Level Forecasting.png" width="45%" style="display:inline-block; margin-right:10px;" />
@@ -68,7 +65,7 @@ The point is not to choose one over the other. The point is to let them work tog
 
 ---
 
-## How the system makes forecasting more credible
+## Forecasting Methodology
 
 This is not a repo built around one favorite model or one flattering score.
 
@@ -125,9 +122,8 @@ Each image highlights a different section of the dashboard for quick exploration
 [Open the full dashboard demo video](dashboard/dashboard-demo.mov)
 ---
 
-## Quick start
-
-### Setup
+<details>
+<summary><strong>Setup</strong></summary>
 
 Use a non-system Python `>=3.10` such as Homebrew Python on macOS.
 
@@ -154,7 +150,10 @@ python -m pip install -e .
 
 Set `POSTGRES_URL` only if you want PostgreSQL persistence.
 
-### Common commands
+</details>
+
+<details>
+<summary><strong>Common commands</strong></summary>
 
 | Task | Command | Outputs |
 |---|---|---|
@@ -169,3 +168,6 @@ Optional runtime check before forecasting:
 ```bash
 python -m system_level.cli doctor --level station --config configs/station_level/config.yaml
 ```
+
+</details>
+
